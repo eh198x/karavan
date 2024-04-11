@@ -1,0 +1,15 @@
+- route:
+    id: route-be3f
+    nodePrefixId: route-4b0
+    from:
+      id: from-a853
+      uri: kamelet:timer-source
+      parameters:
+        message: Hello VS Code
+      steps:
+        - process:
+            id: process-0d58
+            ref: CustomProcess
+        - log:
+            id: log-f46d
+            message: ${body}
