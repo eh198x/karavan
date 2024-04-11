@@ -8,6 +8,6 @@ import org.apache.camel.Processor;
 public class CustomProcess implements Processor {
 
   public void process(Exchange exchange) throws Exception {
-      exchange.getIn().setBody("Hello World - VSC");
+      exchange.getIn().setBody("Hello World - VSCode");
   }
 }
