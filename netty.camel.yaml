@@ -1,0 +1,77 @@
+- route:
+    id: HTTP-endpoint-route-5c08
+    nodePrefixId: route-567
+    from:
+      id: from-74ec
+      uri: netty-http
+      parameters:
+        protocol: http
+        host: 0.0.0.0
+        port: "8042"
+        path: upload
+      steps:
+        - log:
+            id: log-6b7d
+            message: ${headers}
+        - script:
+            id: script-bc17
+            expression:
+              groovy:
+                id: groovy-1638
+                expression: resource:file:./kernel.groovy
+- route:
+    id: File-Extract-route-3751
+    nodePrefixId: route-819
+    from:
+      id: from-5022
+      uri: file
+      parameters:
+        directoryName: Fileshare/1-uploads
+      steps:
+        - unmarshal:
+            id: unmarshal-e85a
+            zipFile:
+              id: zipFile-cc23
+        - to:
+            id: to-53f5
+            uri: file
+            parameters:
+              directoryName: Fileshare/2-unzipped
+- route:
+    id: File-XSD-Validation-route-0333
+    nodePrefixId: route-0eb
+    from:
+      id: from-0c28
+      uri: file
+      parameters:
+        directoryName: Fileshare/2-unzipped
+      steps:
+        - to:
+            id: to-b023
+            uri: validator
+            parameters:
+              resourceUri: file:Resources/myfile1.xsd
+        - to:
+            id: to-15b7
+            uri: file
+            parameters:
+              directoryName: Fileshare/3-validated
+- route:
+    id: route-1854
+    nodePrefixId: route-27a
+    from:
+      id: from-c522
+      uri: file
+      parameters:
+        directoryName: Fileshare/3-validated
+      steps:
+        - to:
+            id: to-5398
+            uri: xslt
+            parameters:
+              resourceUri: file:Resources/myfile1.xslt
+        - to:
+            id: to-7ab5
+            uri: file
+            parameters:
+              directoryName: Fileshare/4-internal-format
