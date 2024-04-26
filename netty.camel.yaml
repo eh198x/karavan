@@ -27,6 +27,7 @@
       uri: file
       parameters:
         directoryName: Fileshare/1-uploads
+        sortBy: file:modified
       steps:
         - unmarshal:
             id: unmarshal-e85a
@@ -37,6 +38,7 @@
             uri: file
             parameters:
               directoryName: Fileshare/2-unzipped
+              keepLastModified: true
 - route:
     id: File-XSD-Validation-route-0333
     nodePrefixId: route-0eb
@@ -57,7 +59,7 @@
             parameters:
               directoryName: Fileshare/3-validated
 - route:
-    id: route-1854
+    id: XSLT-transformation-route-1854
     nodePrefixId: route-27a
     from:
       id: from-c522
