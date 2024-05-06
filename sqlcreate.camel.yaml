@@ -15,4 +15,4 @@
             expression:
               groovy:
                 id: groovy-bd62
-                expression: resource:file:./sqlcreate2.groovy
+                expression: resource:file:./rest.groovy

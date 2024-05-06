@@ -22,6 +22,9 @@ def process(Exchange exchange, Logger LOGGER ) throws Exception {
  
     // Parse the XML content using XmlParser
     def articles = new XmlParser().parse(xmlStream)
+
+    def sqlStatements = []  // List to store generated SQL statements
+
  
     articles.article.each { article ->
         def author = article.author.text()
@@ -43,13 +46,16 @@ def process(Exchange exchange, Logger LOGGER ) throws Exception {
             println "Author is '$author'. Skipping: Author is not Jonas, Elias, or Peter."
         }
 
-        if (sql) {
+        if (sql) {  
             println "=== Generated SQL: " + sql  // Print the generated SQL statement for each article
+            sqlStatements.add(sql)  // Add generated SQL to the list
         }
   
   
     }
 
+    // Set the list of SQL statements as an exchange property
+    exchange.setProperty("sqlStatements", sqlStatements)
 
     println "Finished processing articles."
    
