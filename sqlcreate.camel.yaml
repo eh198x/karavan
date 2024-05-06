@@ -1,0 +1,18 @@
+- route:
+    id: SQL-Create-route-61b8
+    nodePrefixId: route-eed
+    from:
+      id: from-2b69
+      uri: file
+      parameters:
+        directoryName: Fileshare/4-internal-format
+      steps:
+        - log:
+            id: log-1f64
+            message: ${body}
+        - script:
+            id: script-bb93
+            expression:
+              groovy:
+                id: groovy-bd62
+                expression: resource:file:./sqlcreate2.groovy

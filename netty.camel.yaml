@@ -52,7 +52,7 @@
             id: to-b023
             uri: validator
             parameters:
-              resourceUri: file:Resources/myfile1.xsd
+              resourceUri: file:Resources/articles.xsd
         - to:
             id: to-15b7
             uri: file
@@ -71,9 +71,27 @@
             id: to-5398
             uri: xslt
             parameters:
-              resourceUri: file:Resources/myfile1.xslt
+              resourceUri: file:Resources/articles.xslt
         - to:
             id: to-7ab5
             uri: file
             parameters:
               directoryName: Fileshare/4-internal-format
+- route:
+    id: SQL-Create-route-b337
+    nodePrefixId: route-c8f
+    from:
+      id: from-f909
+      uri: file
+      parameters:
+        directoryName: Fileshare/4-internal-format
+      steps:
+        - log:
+            id: log-2c86
+            message: ${body}
+        - script:
+            id: script-39b8
+            expression:
+              groovy:
+                id: groovy-32d5
+                expression: resource:file:./sqlcreate3.wf.groovy
