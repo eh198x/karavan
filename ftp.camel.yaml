@@ -1,0 +1,33 @@
+- route:
+    id: FTP-route-d94f
+    nodePrefixId: route-13e
+    from:
+      id: from-7da1
+      uri: kamelet:sftp-source
+      parameters:
+        connectionPort: "22"
+        connectionHost: test.rebex.net
+        username: demo
+        password: password
+        directoryName: /pub/example
+      steps:
+        - to:
+            id: to-da1a
+            uri: file
+            parameters:
+              directoryName: Fileshare/5-sftp
+- route:
+    id: File-Processing-route-9920
+    nodePrefixId: route-536
+    from:
+      id: from-f923
+      uri: file
+      parameters:
+        directoryName: Fileshare/5-sftp
+      steps:
+        - script:
+            id: script-d669
+            expression:
+              groovy:
+                id: groovy-4f92
+                expression: resource:file:./ftp.groovy
