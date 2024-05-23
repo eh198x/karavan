@@ -1,0 +1,63 @@
+- route:
+    id: HTTP-endpoint-route-5c08
+    nodePrefixId: route-567
+    from:
+      id: from-74ec
+      uri: netty-http
+      parameters:
+        protocol: http
+        host: 0.0.0.0
+        port: "8042"
+        path: upload
+      steps:
+        - log:
+            id: log-6b7d
+            message: ${headers}
+        - script:
+            id: script-bc17
+            expression:
+              groovy:
+                id: groovy-1638
+                expression: resource:file:./kernel.groovy
+- route:
+    id: File-Extract-route-3751
+    nodePrefixId: route-819
+    from:
+      id: from-5022
+      uri: file
+      parameters:
+        directoryName: Fileshare/1-uploads
+        sortBy: file:modified
+      steps:
+        - doTry:
+            id: doTry-a053
+            doCatch:
+              - id: doCatch-9754
+                exception:
+                  - java.lang.Exception
+                  - java.lang.RuntimeException
+                steps:
+                  - log:
+                      id: log-e9cc
+                      message: "ERROR:  ${exception.message}"
+            steps:
+              - unmarshal:
+                  id: unmarshal-e85a
+                  zipFile:
+                    id: zipFile-cc23
+              - to:
+                  id: to-b023
+                  uri: validator
+                  parameters:
+                    resourceUri: file:Resources/articles.xsd
+              - to:
+                  id: to-5398
+                  uri: xslt
+                  parameters:
+                    resourceUri: file:Resources/articles.xslt
+              - to:
+                  id: to-53f5
+                  uri: file
+                  parameters:
+                    directoryName: Fileshare/2-processed
+                    keepLastModified: true
