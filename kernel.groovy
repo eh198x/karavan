@@ -12,7 +12,7 @@ LOGGER.info("Received a new file upload...\n")
 process(exchange, LOGGER)
 
 def process(Exchange exchange, Logger LOGGER) throws Exception {
-    NettyHttpMessage nettyHttpMessage = exchange.getIn(NettyHttpMessage.class)
+    NettyHttpMessage nettyHttpMessage = exchange.getIn(File.class)
     HttpPostRequestDecoder postRequest = new HttpPostRequestDecoder(nettyHttpMessage.getHttpRequest())
     getHttpDataAttributes(postRequest, LOGGER)
    

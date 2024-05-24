@@ -9,13 +9,14 @@
         connectionHost: test.rebex.net
         username: demo
         password: password
-        directoryName: /pub/example
+        directoryName: /pub
+        recursive: true
       steps:
         - to:
             id: to-da1a
             uri: file
             parameters:
-              directoryName: Fileshare/5-sftp
+              directoryName: Fileshare/sftp
 - route:
     id: File-Processing-route-9920
     nodePrefixId: route-536
@@ -23,7 +24,8 @@
       id: from-f923
       uri: file
       parameters:
-        directoryName: Fileshare/5-sftp
+        directoryName: Fileshare/sftp
+        recursive: true
       steps:
         - script:
             id: script-d669

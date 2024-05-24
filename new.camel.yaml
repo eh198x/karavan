@@ -40,7 +40,18 @@
                   - log:
                       id: log-e9cc
                       message: "ERROR:  ${exception.message}"
+                  - to:
+                      id: to-6fac
+                      uri: file
+                      parameters:
+                        directoryName: Fileshare/2-processed-failed
             steps:
+              - script:
+                  id: script-a63a
+                  expression:
+                    groovy:
+                      id: groovy-9ed1
+                      expression: resource:file:./logger.wf.groovy
               - unmarshal:
                   id: unmarshal-e85a
                   zipFile:
