@@ -35,16 +35,17 @@
               - id: doCatch-9754
                 exception:
                   - java.lang.Exception
-                  - java.lang.RuntimeException
                 steps:
                   - log:
-                      id: log-e9cc
-                      message: "ERROR:  ${exception.message}"
+                      id: log-e972
+                      message: >-
+                        EXCHANGE ID: ${exchangeId} MESSAGE ID: ${id} ERROR:
+                        ${exception.message}
                   - to:
-                      id: to-6fac
+                      id: to-d8cf
                       uri: file
                       parameters:
-                        directoryName: Fileshare/2-processed-failed
+                        directoryName: Fileshare/02-failed
             steps:
               - script:
                   id: script-a63a
@@ -72,3 +73,18 @@
                   parameters:
                     directoryName: Fileshare/2-processed
                     keepLastModified: true
+- route:
+    id: route-c6a1
+    nodePrefixId: route-1ce
+    from:
+      id: from-42f6
+      uri: direct
+      parameters:
+        name: test-direct
+      steps:
+        - script:
+            id: script-ec5d
+            expression:
+              groovy:
+                id: groovy-dd94
+                expression: resource:file:./logger.error.wf.groovy
