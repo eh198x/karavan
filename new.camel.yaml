@@ -42,6 +42,11 @@
                   - log:
                       id: log-4723
                       message: "Processing file from Greece. File Path: ${file:path} "
+                  - to:
+                      id: to-f976
+                      uri: direct
+                      parameters:
+                        name: wf-GR
               - id: when-1c0a
                 expression:
                   simple:
@@ -58,6 +63,35 @@
                     id: log-38db
                     message: Unknown choice for ${file:path}
                     loggingLevel: WARN
+- route:
+    id: route-c6a1
+    nodePrefixId: route-1ce
+    from:
+      id: from-42f6
+      uri: direct
+      parameters:
+        name: test-direct
+      steps:
+        - log:
+            id: log-e972
+            message: >-
+              EXCHANGE ID: ${exchangeId} MESSAGE ID: ${id} ERROR:
+              ${exception.message}
+        - script:
+            id: script-ec5d
+            expression:
+              groovy:
+                id: groovy-dd94
+                expression: resource:file:./loggererror.wf.groovy
+- route:
+    id: WF-GR-route-9dfc
+    nodePrefixId: route-369
+    from:
+      id: from-a082
+      uri: direct
+      parameters:
+        name: wf-GR
+      steps:
         - doTry:
             id: doTry-a053
             doCatch:
@@ -115,23 +149,3 @@
                   parameters:
                     directoryName: Fileshare/2-processed
                     keepLastModified: true
-- route:
-    id: route-c6a1
-    nodePrefixId: route-1ce
-    from:
-      id: from-42f6
-      uri: direct
-      parameters:
-        name: test-direct
-      steps:
-        - log:
-            id: log-e972
-            message: >-
-              EXCHANGE ID: ${exchangeId} MESSAGE ID: ${id} ERROR:
-              ${exception.message}
-        - script:
-            id: script-ec5d
-            expression:
-              groovy:
-                id: groovy-dd94
-                expression: resource:file:./loggererror.wf.groovy
