@@ -16,7 +16,7 @@ def process(Exchange exchange, Logger LOGGER) throws Exception {
       exchange.setProperty("myFile", myFile.absolutePath) // Use absolute path for clarity
 
 
-    LOGGER.info("EXCHANGE ID ${exchangeId} - Workflow started for file: ${myFile}")
+    LOGGER.info("EXCHANGE ID: ${exchangeId} - Workflow started for file: ${myFile}")
 
 
 }

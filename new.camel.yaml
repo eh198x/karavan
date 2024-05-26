@@ -48,11 +48,6 @@
                                   simple:
                                     id: simple-011f
                                     expression: ${exception.message}
-                        - log:
-                            id: log-e972
-                            message: >-
-                              EXCHANGE ID: ${exchangeId} MESSAGE ID: ${id}
-                              ERROR: ${exception.message}
                         - script:
                             id: script-e59d
                             expression:
@@ -100,6 +95,11 @@
       parameters:
         name: test-direct
       steps:
+        - log:
+            id: log-e972
+            message: >-
+              EXCHANGE ID: ${exchangeId} MESSAGE ID: ${id} ERROR:
+              ${exception.message}
         - script:
             id: script-ec5d
             expression:

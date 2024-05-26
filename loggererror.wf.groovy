@@ -3,7 +3,7 @@ import org.apache.camel.Exchange
 
 Logger LOGGER = Logger.getLogger("")
 
-LOGGER.info("[ERROR WF] groovy script\n")
+//LOGGER.info("[ERROR WF] groovy script\n")
 
 process(exchange, LOGGER)
 
@@ -14,11 +14,11 @@ def process(Exchange exchange, Logger LOGGER) throws Exception {
 
         String exceptionMessage = exchange.getIn().getHeader("ExceptionMessage", String.class)
 
-        LOGGER.info("[ERROR WF] EXCHANGE ID: ${exchangeId}. Exception message: ${exceptionMessage}\n")
+        LOGGER.info("EXCHANGE ID: ${exchangeId} - Exception message: ${exceptionMessage}\n")
 
     } catch (Exception e) {
         // Log the exception details
-        LOGGER.info("[ERROR WF] Exception occurred: ${e.message}")
+        LOGGER.info("EXCHANGE ID: ${exchangeId} - Exception occurred: ${e.message}")
         e.printStackTrace() // Print the stack trace (optional)
 
         // Rethrow the exception if needed
