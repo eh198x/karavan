@@ -36,16 +36,34 @@
                 exception:
                   - java.lang.Exception
                 steps:
-                  - log:
-                      id: log-e972
-                      message: >-
-                        EXCHANGE ID: ${exchangeId} MESSAGE ID: ${id} ERROR:
-                        ${exception.message}
-                  - to:
-                      id: to-d8cf
-                      uri: file
-                      parameters:
-                        directoryName: Fileshare/02-failed
+                  - step:
+                      id: step-19c4
+                      steps:
+                        - setHeaders:
+                            id: setHeaders-ed3f
+                            headers:
+                              - id: setHeader-d4df
+                                name: ExceptionMessage
+                                expression:
+                                  simple:
+                                    id: simple-011f
+                                    expression: ${exception.message}
+                        - log:
+                            id: log-e972
+                            message: >-
+                              EXCHANGE ID: ${exchangeId} MESSAGE ID: ${id}
+                              ERROR: ${exception.message}
+                        - script:
+                            id: script-e59d
+                            expression:
+                              groovy:
+                                id: groovy-d2c2
+                                expression: resource:file:./loggererror.wf.groovy
+                        - to:
+                            id: to-d8cf
+                            uri: file
+                            parameters:
+                              directoryName: Fileshare/02-failed
             steps:
               - script:
                   id: script-a63a
@@ -87,4 +105,4 @@
             expression:
               groovy:
                 id: groovy-dd94
-                expression: resource:file:./logger.error.wf.groovy
+                expression: resource:file:./loggererror.wf.groovy

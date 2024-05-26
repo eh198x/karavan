@@ -1,0 +1,41 @@
+- route:
+    id: File-Processing-route-9920
+    nodePrefixId: route-536
+    from:
+      id: from-f923
+      uri: file
+      parameters:
+        directoryName: Fileshare/sftp
+        recursive: true
+      steps:
+        - script:
+            id: script-d669
+            expression:
+              groovy:
+                id: groovy-4f92
+                expression: resource:file:./ftp.groovy
+- route:
+    id: Cron-SFTP-route-8754
+    nodePrefixId: route-811
+    from:
+      id: from-17d0
+      uri: cron
+      parameters:
+        name: cron2
+        schedule: "*/10 * * * * ?"
+      steps:
+        - to:
+            id: to-2889
+            uri: kamelet:sftp-sink
+            parameters:
+              connectionHost: test.rebex.net
+              connectionPort: "22"
+              username: demo
+              password: password
+              directoryName: /pub
+        - to:
+            id: to-76e8
+            uri: file
+            parameters:
+              directoryName: Fileshare/sftp-cron
+              readLock: changed
