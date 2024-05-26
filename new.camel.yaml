@@ -28,7 +28,36 @@
       parameters:
         directoryName: Fileshare/1-uploads
         sortBy: file:modified
+        recursive: true
       steps:
+        - choice:
+            id: choice-32a1
+            when:
+              - id: when-b3c3
+                expression:
+                  simple:
+                    id: simple-c11e
+                    expression: ${file:path} contains 'Greece/'
+                steps:
+                  - log:
+                      id: log-4723
+                      message: "Processing file from Greece. File Path: ${file:path} "
+              - id: when-1c0a
+                expression:
+                  simple:
+                    id: simple-4e8b
+                    expression: ${file:path} contains 'Austria/'
+                steps:
+                  - log:
+                      id: log-e3ef
+                      message: Processing file from Austria
+            otherwise:
+              id: otherwise-1c87
+              steps:
+                - log:
+                    id: log-38db
+                    message: Unknown choice for ${file:path}
+                    loggingLevel: WARN
         - doTry:
             id: doTry-a053
             doCatch:
