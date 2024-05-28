@@ -1,0 +1,43 @@
+- route:
+    id: route-5990
+    nodePrefixId: route-dc2
+    from:
+      id: from-4854
+      uri: kamelet:postgresql-source
+      parameters:
+        serverName: 192.168.49.2
+        serverPort: "32150"
+        username: postgres
+        password: password
+        query: select * from public.workflow where status='A'
+        databaseName: postgres
+      steps:
+        - log:
+            id: log-377f
+            message: "Printing data from SQL source: ${body}"
+        - script:
+            id: script-66ad
+            expression:
+              groovy:
+                id: groovy-ef81
+                expression: resource:file:./database.groovy
+        - setHeader:
+            id: setHeader-1c71
+            name: id
+            expression:
+              simple:
+                id: simple-726b
+                expression: ${id}
+        - to:
+            id: to-2066
+            uri: kamelet:postgresql-sink
+            parameters:
+              serverName: 192.168.49.2
+              serverPort: "32150"
+              username: postgres
+              password: password
+              query: UPDATE public.workflow SET status='AA' where id=$id;
+              databaseName: postgres
+        - log:
+            id: log-c2d9
+            message: "Reply from SQL Sink: ${body}"

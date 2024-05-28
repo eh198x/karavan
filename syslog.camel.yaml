@@ -1,0 +1,16 @@
+- route:
+    id: File-Processing-route-9920
+    nodePrefixId: route-536
+    from:
+      id: from-f923
+      uri: file
+      parameters:
+        directoryName: Fileshare/Files-Syslog
+        recursive: true
+      steps:
+        - script:
+            id: script-d669
+            expression:
+              groovy:
+                id: groovy-4f92
+                expression: resource:file:./ftp.groovy
