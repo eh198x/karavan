@@ -3,7 +3,8 @@ def tools = shell.parse(new File('mytools.groovy'))
 
 //import groovy.xml.XmlParser
 //import mytools
- import org.apache.logging.log4j.Logger
+import org.apache.logging.log4j.Logger
+import org.apache.logging.log4j.LogManager
 
 //private static final Logger logger = LogManager.getLogger(Log4j2Example.class);
 
@@ -15,6 +16,8 @@ try{
 
     //Logger LOGGER = LogManager.getRootLogger();
     Logger LOGGER = LogManager.getLogger("")
+
+    LOGGER.info("Calling tools.jsonProcess...")
 
     tools.jsonProcess(exchange, LOGGER)
 

@@ -21,13 +21,15 @@
               groovy:
                 id: groovy-ef81
                 expression: resource:file:./database.groovy
-        - setHeader:
-            id: setHeader-1c71
-            name: id
-            expression:
-              simple:
-                id: simple-726b
-                expression: ${id}
+        - log:
+            id: log-32fd
+            message: "Logging the rec id: ${exchangeProperty.recid}"
+        - log:
+            id: log-f9c8
+            message: >-
+              Before SQL Sink. Print recid: ${exchangeProperty.recid}.  UPDATE
+              public.workflow SET status='AA' where
+              id=${exchangeProperty.recid};
         - to:
             id: to-2066
             uri: kamelet:postgresql-sink
@@ -36,8 +38,22 @@
               serverPort: "32150"
               username: postgres
               password: password
-              query: UPDATE public.workflow SET status='AA' where id=$id;
+              query: >-
+                UPDATE public.workflow SET status='AA' where
+                id=:#${exchangeProperty.recid};
               databaseName: postgres
         - log:
             id: log-c2d9
             message: "Reply from SQL Sink: ${body}"
+- route:
+    id: route-f81a
+    nodePrefixId: route-88c
+    from:
+      id: from-61f7
+      uri: direct
+      parameters:
+        name: direct-test1
+      steps:
+        - log:
+            id: log-70b6
+            message: ${body}
