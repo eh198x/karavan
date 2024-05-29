@@ -20,7 +20,7 @@
                 id: groovy-1638
                 expression: resource:file:./kernel.groovy
 - route:
-    id: File-Extract-route-3751
+    id: Choice-File-route-3751
     nodePrefixId: route-819
     from:
       id: from-5022
@@ -56,7 +56,7 @@
                       id: to-f976
                       uri: direct
                       parameters:
-                        name: wf-GR
+                        name: Direct-R1
               - id: when-1c0a
                 expression:
                   simple:
@@ -82,7 +82,7 @@
                     message: Unknown choice for ${file:path}
                     loggingLevel: WARN
 - route:
-    id: route-c6a1
+    id: TEMP-route-c6a1
     nodePrefixId: route-1ce
     from:
       id: from-42f6
@@ -102,13 +102,13 @@
                 id: groovy-dd94
                 expression: resource:file:./loggererror.wf.groovy
 - route:
-    id: WF-GR-route-9dfc
+    id: Processing-Route-1-9dfc
     nodePrefixId: route-369
     from:
       id: from-a082
       uri: direct
       parameters:
-        name: wf-GR
+        name: Direct-R1
       steps:
         - doTry:
             id: doTry-a053
