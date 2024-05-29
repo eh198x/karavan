@@ -33,15 +33,12 @@ def jsonProcess(Exchange exchange, Logger LOGGER ) throws Exception {
     def status = parsedResponse.status
 
     // Log the extracted values
-    LOGGER.info("ID: $id")
-    LOGGER.info("Exchange ID: $exchangeId")
-    LOGGER.info("Message: $message")
-    LOGGER.info("Status: $status")
+    LOGGER.info("ID: $id,  Exchange ID: $exchangeId, Message: $message, Status: $status")
 
     try {
         def recid = id.toInteger()
         exchange.setProperty("recid", recid)
-        exchange.setProperty("update_workflow_status", "UPDATE public.workflow SET status='AA' WHERE id = $recid");
+        //exchange.setProperty("update_workflow_status", "UPDATE public.workflow SET status='AA' WHERE id = $recid");
         LOGGER.info("Setting recid: $recid")
         exchange.setProperty("recmessage", message)
     } catch (NumberFormatException e) {

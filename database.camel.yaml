@@ -24,12 +24,6 @@
         - log:
             id: log-32fd
             message: "Logging the rec id: ${exchangeProperty.recid}"
-        - log:
-            id: log-f9c8
-            message: >-
-              Before SQL Sink. Print recid: ${exchangeProperty.recid}.  UPDATE
-              public.workflow SET status='AA' where
-              id=${exchangeProperty.recid};
         - to:
             id: to-2066
             uri: kamelet:postgresql-sink
