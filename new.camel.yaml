@@ -37,11 +37,21 @@
                 expression:
                   simple:
                     id: simple-c11e
-                    expression: ${file:path} contains 'Greece/'
+                    expression: >-
+                      ${file:path} contains 'Greece/' || ${file:path} contains
+                      'Germany/'
                 steps:
+                  - script:
+                      id: script-b6ce
+                      expression:
+                        groovy:
+                          id: groovy-abeb
+                          expression: resource:file:./setChoiceVariables.wf.groovy
                   - log:
                       id: log-4723
-                      message: "Processing file from Greece. File Path: ${file:path} "
+                      message: >-
+                        Processing file from ${exchangeProperty.Country}. File
+                        Path: ${file:path} 
                   - to:
                       id: to-f976
                       uri: direct
@@ -53,9 +63,17 @@
                     id: simple-4e8b
                     expression: ${file:path} contains 'Austria/'
                 steps:
+                  - script:
+                      id: script-10b9
+                      expression:
+                        groovy:
+                          id: groovy-14a1
+                          expression: resource:file:./setChoiceVariables.wf.groovy
                   - log:
                       id: log-e3ef
-                      message: Processing file from Austria
+                      message: >-
+                        Processing file from ${exchangeProperty.Country}. File
+                        Path: ${file:path} 
             otherwise:
               id: otherwise-1c87
               steps:
