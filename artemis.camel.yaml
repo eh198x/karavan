@@ -37,4 +37,4 @@
             uri: kamelet:jms-amqp-10-sink
             parameters:
               remoteURI: amqp://0.0.0.0:61616
-              destinationName: eliasbroker3
+              destinationName: TestQueue
