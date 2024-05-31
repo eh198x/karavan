@@ -167,3 +167,9 @@
                   parameters:
                     directoryName: Fileshare/2-processed
                     keepLastModified: true
+        - to:
+            id: to-0ab5
+            uri: kamelet:jms-apache-artemis-sink
+            parameters:
+              destinationName: myAddress0:myQueue0
+              brokerURL: tcp://192.168.49.2:5672
