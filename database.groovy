@@ -17,7 +17,7 @@ try{
     //Logger LOGGER = LogManager.getRootLogger();
     Logger LOGGER = LogManager.getLogger("")
 
-    LOGGER.info("Calling tools.jsonProcess...")
+    LOGGER.info("Calling tools.jsonProcess...!")
 
     tools.jsonProcess(exchange, LOGGER)
 
