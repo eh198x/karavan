@@ -1,5 +1,5 @@
 GroovyShell shell = new GroovyShell()
-def tools = shell.parse(new File('mytools.groovy'))
+//def tools = shell.parse(new File('mytools.groovy'))
 
 //import groovy.xml.XmlParser
 //import mytools

@@ -18,7 +18,7 @@
             expression:
               groovy:
                 id: groovy-1638
-                expression: resource:file:./kernel.groovy
+                expression: resource:file:./src/main/groovy/kernel.groovy
 - route:
     id: Choice-File-route-3751
     nodePrefixId: route-819
@@ -46,7 +46,8 @@
                       expression:
                         groovy:
                           id: groovy-abeb
-                          expression: resource:file:./setChoiceVariables.wf.groovy
+                          expression: >-
+                            resource:file:./src/main/groovy/setChoiceVariables.wf.groovy
                   - log:
                       id: log-4723
                       message: >-
@@ -68,7 +69,8 @@
                       expression:
                         groovy:
                           id: groovy-14a1
-                          expression: resource:file:./setChoiceVariables.wf.groovy
+                          expression: >-
+                            resource:file:./src/main/groovy/setChoiceVariables.wf.groovy
                   - log:
                       id: log-e3ef
                       message: >-
@@ -100,7 +102,7 @@
             expression:
               groovy:
                 id: groovy-dd94
-                expression: resource:file:./loggererror.wf.groovy
+                expression: resource:file:./src/main/groovy/loggererror.wf.groovy
 - route:
     id: Processing-Route-1-9dfc
     nodePrefixId: route-369
@@ -134,7 +136,8 @@
                             expression:
                               groovy:
                                 id: groovy-d2c2
-                                expression: resource:file:./loggererror.wf.groovy
+                                expression: >-
+                                  resource:file:./src/main/groovy/loggererror.wf.groovy
                         - to:
                             id: to-d8cf
                             uri: file
@@ -146,7 +149,7 @@
                   expression:
                     groovy:
                       id: groovy-9ed1
-                      expression: resource:file:./logger.wf.groovy
+                      expression: resource:file:./src/main/groovy/logger.wf.groovy
               - unmarshal:
                   id: unmarshal-e85a
                   zipFile:
