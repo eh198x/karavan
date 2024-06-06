@@ -80,19 +80,13 @@
                       - log:
                           id: log-9a5c
                           message: Before PostgresSQL Sink ${body}
-                      - to:
-                          id: to-1e50
-                          uri: kamelet:postgresql-sink
-                          parameters:
-                            serverName: 192.168.49.2
-                            username: postgres
-                            password: password
-                            serverPort: "32150"
-                            databaseName: postgres
-                            query: >-
-                              SELECT
-                              public.create_article(:#${exchangeProperty.title},
-                              :#${exchangeProperty.author}); 
+                      - script:
+                          id: script-e048
+                          expression:
+                            groovy:
+                              id: groovy-1dbf
+                              expression: >-
+                                resource:file:./src/main/groovy/database.proc.groovy
 - route:
     id: Choice-File-route-3752
     nodePrefixId: route-819

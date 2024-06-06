@@ -33,8 +33,8 @@ def process(Exchange exchange, Logger LOGGER) throws Exception {
 def setVariables(Exchange exchange, Logger LOGGER) throws Exception {
 
     String exchangeId = exchange.getExchangeId()  
-    String title="Camel custom code title internal.groovy"
-    String author="Camel custom code author internal.groovy"
+    String title="internal.groovy.title"
+    String author="internal.groovy.author"
 
     
     exchange.setProperty("title", title)

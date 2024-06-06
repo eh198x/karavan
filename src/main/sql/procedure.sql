@@ -19,7 +19,7 @@ BEGIN
       -- Rollback the transaction
       ROLLBACK;
       -- Set the result to an error message
-      result := json_build_object('error', SQLERRM);
+      result := json_build_object('status', SQLERRM);
   END;
   RETURN result;
 END;
