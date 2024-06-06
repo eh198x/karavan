@@ -1,27 +1,26 @@
 CREATE OR REPLACE FUNCTION create_article(
   title varchar(255),
-  author varchar(255),
-  date_published DATE
+  author varchar(255)
 )
-RETURNS text AS $$
+RETURNS json AS $$
 DECLARE
-  -- variable declaration (if needed)
+  result json;
 BEGIN
-  -- stored procedure body
+  -- Perform the INSERT
   BEGIN
-    -- Perform the INSERT
-    INSERT INTO articles ("date", title, author, date_published, status)
-    VALUES (CURRENT_TIMESTAMP, title, author, date_published, 'Active');
-    -- If the INSERT is successful, return 'OK'
-    RETURN 'OK';
+    INSERT INTO articles ("date", title, author, status)
+    VALUES (CURRENT_TIMESTAMP, title, author, 'Active');
+    -- If the INSERT is successful, set the result to 'OK'
+    result := json_build_object('status', 'OK');
   EXCEPTION
     WHEN others THEN
       -- Handle the error here (e.g., log it or raise an exception)
       RAISE NOTICE 'Error: %', SQLERRM;
       -- Rollback the transaction
       ROLLBACK;
-      -- Return the error message
-      RETURN 'Error: ' || SQLERRM;
+      -- Set the result to an error message
+      result := json_build_object('error', SQLERRM);
   END;
+  RETURN result;
 END;
 $$ LANGUAGE plpgsql;

@@ -71,12 +71,12 @@
                                       script: >-
                                         resource:file:./src/main/groovy/loggererror.wf.groovy
                     steps:
-                      - to:
-                          id: to-ad4f
-                          uri: xj
-                          parameters:
-                            transformDirection: XML2JSON
-                            resourceUri: file:Resources/xml2json.xsl
+                      - setBody:
+                          id: setBody-d253
+                          expression:
+                            constant:
+                              id: constant-feb7
+                              expression: "{\"title\": \"jsonTitle\", \"author\": \"jsonAuthor\"}"
                       - log:
                           id: log-9a5c
                           message: Before PostgresSQL Sink ${body}
@@ -84,15 +84,15 @@
                           id: to-1e50
                           uri: kamelet:postgresql-sink
                           parameters:
-                            serverName: 92.168.49.2
+                            serverName: 192.168.49.2
                             username: postgres
                             password: password
                             serverPort: "32150"
                             databaseName: postgres
-                            query: SELECT CURRENT_DATE;
-                      - log:
-                          id: log-5409
-                          message: "After Postgres: ${body}"
+                            query: >-
+                              SELECT
+                              public.create_article(:#${exchangeProperty.title},
+                              :#${exchangeProperty.author}); 
 - route:
     id: Choice-File-route-3752
     nodePrefixId: route-819

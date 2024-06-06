@@ -24,6 +24,16 @@
         - log:
             id: log-32fd
             message: "Logging the rec id: ${exchangeProperty.recid}"
+        - delay:
+            id: delay-1a49
+            expression:
+              constant:
+                id: constant-122c
+                expression: "5000"
+        - log:
+            id: log-1439
+            message: Delay for 5 seconds was triggered!!! ${body}
+            loggingLevel: WARN
         - to:
             id: to-2066
             uri: kamelet:postgresql-sink
