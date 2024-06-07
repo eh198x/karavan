@@ -10,7 +10,7 @@ import java.io.File
 //import org.apache.camel.support.ExchangeHelper
 
 Logger LOGGER = Logger.getLogger("")
-LOGGER.info("Received a new XML...\n")
+//LOGGER.info("Received a new XML...\n")
 process(exchange, LOGGER)
 
 setVariables(exchange, LOGGER)
@@ -27,7 +27,7 @@ def process(Exchange exchange, Logger LOGGER) throws Exception {
     //HttpPostRequestDecoder postRequest = new HttpPostRequestDecoder(nettyHttpMessage.getHttpRequest())
     //getHttpDataAttributes(postRequest, LOGGER)
    
-   request.body="XML was processed succesfully!"
+   //request.body="XML was processed succesfully!"
 }
 
 def setVariables(Exchange exchange, Logger LOGGER) throws Exception {

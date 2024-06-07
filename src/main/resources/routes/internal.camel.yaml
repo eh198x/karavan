@@ -71,15 +71,9 @@
                                       script: >-
                                         resource:file:./src/main/groovy/loggererror.wf.groovy
                     steps:
-                      - setBody:
-                          id: setBody-d253
-                          expression:
-                            constant:
-                              id: constant-feb7
-                              expression: "{\"title\": \"jsonTitle\", \"author\": \"jsonAuthor\"}"
                       - log:
                           id: log-9a5c
-                          message: Before PostgresSQL Sink ${body}
+                          message: Before script ${body}
                       - script:
                           id: script-e048
                           expression:
@@ -88,171 +82,17 @@
                               expression: >-
                                 resource:file:./src/main/groovy/database.proc.groovy
 - route:
-    id: Choice-File-route-3752
-    nodePrefixId: route-819
+    id: route-f7a4
+    nodePrefixId: route-20e
     from:
-      id: from-5022
-      uri: file
-      parameters:
-        directoryName: Fileshare/1-uploads
-        sortBy: file:modified
-        recursive: true
-      steps:
-        - to:
-            id: to-aa78
-            uri: kamelet:postgresql-sink
-            parameters:
-              serverName: 192.168.49.2
-              username: postgres
-              password: password
-              serverPort: "32150"
-              query: >-
-                SELECT public.create_article(:#${exchangeProperty.title},
-                :#${exchangeProperty.author});
-              databaseName: postgres
-        - choice:
-            id: choice-32a1
-            when:
-              - id: when-b3c3
-                expression:
-                  simple:
-                    id: simple-c11e
-                    expression: >-
-                      ${file:path} contains 'Greece/' || ${file:path} contains
-                      'Germany/'
-                steps:
-                  - script:
-                      id: script-b6ce
-                      expression:
-                        groovy:
-                          id: groovy-abeb
-                          expression: >-
-                            resource:file:./src/main/groovy/setChoiceVariables.wf.groovy
-                  - log:
-                      id: log-4723
-                      message: >-
-                        Processing file from ${exchangeProperty.Country}. File
-                        Path: ${file:path} 
-                  - to:
-                      id: to-f976
-                      uri: direct
-                      parameters:
-                        name: Direct-R1-internal
-              - id: when-1c0a
-                expression:
-                  simple:
-                    id: simple-4e8b
-                    expression: ${file:path} contains 'Austria/'
-                steps:
-                  - script:
-                      id: script-10b9
-                      expression:
-                        groovy:
-                          id: groovy-14a1
-                          expression: >-
-                            resource:file:./src/main/groovy/setChoiceVariables.wf.groovy
-                  - log:
-                      id: log-e3ef
-                      message: >-
-                        Processing file from ${exchangeProperty.Country}. File
-                        Path: ${file:path} 
-            otherwise:
-              id: otherwise-1c87
-              steps:
-                - log:
-                    id: log-38db
-                    message: Unknown choice for ${file:path}
-                    loggingLevel: WARN
-- route:
-    id: TEMP-route-c6a1
-    nodePrefixId: route-1ce
-    from:
-      id: from-42f6
+      id: from-5041
       uri: direct
       parameters:
-        name: test-direct
+        name: dddd
       steps:
-        - log:
-            id: log-e972
-            message: >-
-              EXCHANGE ID: ${exchangeId} MESSAGE ID: ${id} ERROR:
-              ${exception.message}
-        - script:
-            id: script-ec5d
+        - setBody:
+            id: setBody-d253
             expression:
-              groovy:
-                id: groovy-dd94
-                expression: resource:file:./src/main/groovy/loggererror.wf.groovy
-- route:
-    id: Processing-Route-1-9dfc
-    nodePrefixId: route-369
-    from:
-      id: from-a082
-      uri: direct
-      parameters:
-        name: Direct-R1-internal
-      steps:
-        - doTry:
-            id: doTry-a053
-            doCatch:
-              - id: doCatch-9754
-                exception:
-                  - java.lang.Exception
-                steps:
-                  - step:
-                      id: step-19c4
-                      steps:
-                        - setHeaders:
-                            id: setHeaders-ed3f
-                            headers:
-                              - id: setHeader-d4df
-                                name: ExceptionMessage
-                                expression:
-                                  simple:
-                                    id: simple-011f
-                                    expression: ${exception.message}
-                        - script:
-                            id: script-e59d
-                            expression:
-                              groovy:
-                                id: groovy-d2c2
-                                expression: >-
-                                  resource:file:./src/main/groovy/loggererror.wf.groovy
-                        - to:
-                            id: to-d8cf
-                            uri: file
-                            parameters:
-                              directoryName: Fileshare/02-failed
-            steps:
-              - script:
-                  id: script-a63a
-                  expression:
-                    groovy:
-                      id: groovy-9ed1
-                      expression: resource:file:./src/main/groovy/logger.wf.groovy
-              - unmarshal:
-                  id: unmarshal-e85a
-                  zipFile:
-                    id: zipFile-cc23
-              - to:
-                  id: to-b023
-                  uri: validator
-                  parameters:
-                    resourceUri: file:Resources/articles.xsd
-              - to:
-                  id: to-5398
-                  uri: xslt
-                  parameters:
-                    resourceUri: file:Resources/articles.xslt
-              - to:
-                  id: to-53f5
-                  uri: file
-                  parameters:
-                    directoryName: Fileshare/2-processed
-                    keepLastModified: true
-        - to:
-            id: to-0ab5
-            uri: kamelet:jms-apache-artemis-sink
-            parameters:
-              destinationName: myAddress0:myQueue0
-              brokerURL: tcp://192.168.49.2:5672
+              constant:
+                id: constant-feb7
+                expression: "{\"title\": \"jsonTitle\", \"author\": \"jsonAuthor\"}"
