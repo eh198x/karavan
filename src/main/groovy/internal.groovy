@@ -7,8 +7,11 @@ Logger LOGGER = Logger.getLogger("")
 //LOGGER.info("Received a new XML...\n")
 
 def result = process(exchange, LOGGER)
-String title = result['arg1'];
-String author = result['arg2'];
+
+String title = result[0];
+String author = result[1];
+
+LOGGER.info("before setVariables:: title: $title, author: $author")
 
 setVariables(title, author, exchange, LOGGER)
 
@@ -21,23 +24,16 @@ def process(Exchange exchange, Logger LOGGER) throws Exception {
     
     //LOGGER.info("HTTP method:" + httpMethod + "\nBody:\n" + body + "\n")
 
-        // Parse XML using Groovy Slurper
+    // Parse XML using Groovy Slurper
     def xml = new XmlSlurper().parseText(body)
 
-    // Loop through articles
-    xml.articles.article.each { article ->
-        String title = article.title().text()
-        String authorFirstName = article.author.firstname().text()
-        String authorLastName = article.author.lastname().text()
-        String author = authorFirstName + " " + authorLastName;
-        // Process extracted data
-        LOGGER.info("Title: $title, Author: $author\n")
-        //return [title, author]
-        return [arg1: title, arg2: author]
-        // ... (Optional: store data in exchange properties)
-    }
-   
-   //request.body="XML was processed succesfully!"
+    String firstArticleTitle = xml.article[0].title.text()
+    String authorFullName = "${xml.article[0].author.firstname.text()} ${xml.article[0].author.lastname.text()}"
+    
+    LOGGER.info("First Article Title: $firstArticleTitle")
+    LOGGER.info("Author Full Name: $authorFullName")
+
+    return [firstArticleTitle, authorFullName]
 }
 
 def setVariables(String title, String author, Exchange exchange, Logger LOGGER) throws Exception {

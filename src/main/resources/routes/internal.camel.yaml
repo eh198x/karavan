@@ -71,9 +71,6 @@
                                       script: >-
                                         resource:file:./src/main/groovy/loggererror.wf.groovy
                     steps:
-                      - log:
-                          id: log-9a5c
-                          message: Before script ${body}
                       - script:
                           id: script-e048
                           expression:
@@ -90,6 +87,9 @@
       parameters:
         name: dddd
       steps:
+        - log:
+            id: log-9a5c
+            message: Before script ${body}
         - setBody:
             id: setBody-d253
             expression:
