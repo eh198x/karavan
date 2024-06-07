@@ -1,13 +1,6 @@
 import java.util.logging.Logger
 import org.apache.camel.Exchange
-import io.netty.handler.codec.http.multipart.*
-import org.apache.camel.component.netty.http.NettyHttpMessage
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
-import java.io.File
-
-//import org.apache.camel.support.ExchangeHelper
+//import io.netty.handler.codec.http.multipart.*
 
 Logger LOGGER = Logger.getLogger("")
 //LOGGER.info("Received a new XML...\n")

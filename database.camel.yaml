@@ -1,5 +1,5 @@
 - route:
-    id: route-5990
+    id: query-db-workflow-route-5990
     nodePrefixId: route-dc2
     from:
       id: from-4854
