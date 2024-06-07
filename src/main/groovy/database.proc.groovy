@@ -14,7 +14,10 @@ Logger LOGGER = Logger.getLogger("")
 
 Connection connection = connect(url, user, password, exchange, LOGGER);
 
-String response = runProcedure(connection, exchange, LOGGER)
+String title = exchange.getProperty("title")
+String author = exchange.getProperty("author")
+
+String response = runProcedure(title, author, connection, exchange, LOGGER)
 
 request.body= response
 
@@ -36,11 +39,8 @@ def connect(String url, String user, String password, Exchange exchange, Logger 
     } 
 }
 
-def runProcedure(Connection connection, Exchange exchange, Logger LOGGER) throws Exception {
+def runProcedure(String title, String author, Connection connection, Exchange exchange, Logger LOGGER) throws Exception {
     try {
-
-        String title = exchange.getProperty("title")
-        String author = exchange.getProperty("author") 
 
         // Create a CallableStatement for the function call
         CallableStatement call = connection.prepareCall("{? = call public.create_article(?, ?)}")
