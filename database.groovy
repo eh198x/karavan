@@ -25,13 +25,3 @@ try{
     e.printStackTrace();
 }
 
-/*
-def process(Exchange exchange, Logger LOGGER ) throws Exception {
-     
-def xmlStream = exchange.getIn().getBody(File.class);  
-  
-LOGGER.info("===== Identified file: " + xmlStream )
-  
-  
-}
- */

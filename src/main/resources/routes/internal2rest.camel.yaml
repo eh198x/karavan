@@ -1,0 +1,66 @@
+- route:
+    id: query-db-workflow-route-5990
+    nodePrefixId: route-dc2
+    from:
+      id: from-4854
+      uri: kamelet:postgresql-source
+      parameters:
+        serverName: 192.168.49.2
+        serverPort: "32150"
+        username: postgres
+        password: password
+        query: select * from public.workflow_details where status='W'
+        databaseName: postgres
+      steps:
+        - log:
+            id: log-377f
+            message: "Printing data from SQL source: ${body}"
+        - script:
+            id: script-63be
+            expression:
+              groovy:
+                id: groovy-e2cc
+                expression: resource:file:./src/main/groovy/internal2rest.groovy
+        - to:
+            id: to-74e4
+            uri: rest
+            parameters:
+              method: post
+              host: 0.0.0.0:8044
+              path: internal
+        - log:
+            id: log-29eb
+            message: "After REST call: ${body} for Record ID: ${exchangeProperty.recid};"
+        - to:
+            id: to-2066
+            uri: kamelet:postgresql-sink
+            parameters:
+              serverName: 192.168.49.2
+              serverPort: "32150"
+              username: postgres
+              password: password
+              query: >-
+                UPDATE public.workflow_details SET status='P' where
+                id=:#${exchangeProperty.recid};
+              databaseName: postgres
+        - delay:
+            id: delay-1a49
+            expression:
+              constant:
+                id: constant-122c
+                expression: "5000"
+        - log:
+            id: log-c2d9
+            message: "Reply from SQL Sink: ${body}"
+- route:
+    id: route-f81a
+    nodePrefixId: route-88c
+    from:
+      id: from-61f7
+      uri: direct
+      parameters:
+        name: direct-test1
+      steps:
+        - log:
+            id: log-70b6
+            message: ${body}
