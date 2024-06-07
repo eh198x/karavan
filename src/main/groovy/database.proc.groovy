@@ -5,31 +5,21 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Types;
 
-/* --UNUSED
-// Database connection parameters
-def url = "jdbc:postgresql://192.168.49.2:32150/postgres"
-def user = "postgres"
-def password = "password"
- */
+String url = "jdbc:postgresql://192.168.49.2:32150/postgres"
+String user = "postgres"
+String password = "password"
 
 Logger LOGGER = Logger.getLogger("")
 //LOGGER.info("database.groovy about to connect to db...\n")
 
-Connection connection = connect(exchange, LOGGER);
+Connection connection = connect(url, user, password, exchange, LOGGER);
 
 String response = runProcedure(connection, exchange, LOGGER)
 
 request.body= response
 
-def connect(Exchange exchange, Logger LOGGER) throws Exception {
+def connect(String url, String user, String password, Exchange exchange, Logger LOGGER) throws Exception {
     try {
-        String title = exchange.getProperty("title")
-        String author = exchange.getProperty("author") 
-
-        String url = "jdbc:postgresql://192.168.49.2:32150/postgres"
-        String user = "postgres"
-        String password = "password"
-
         Properties props = new Properties();
         props.setProperty("user", user);
         props.setProperty("password", password);
