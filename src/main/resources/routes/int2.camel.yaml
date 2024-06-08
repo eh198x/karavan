@@ -1,0 +1,17 @@
+- beans:
+    - name: CustomPropertyLoader
+      type: cfl.eua.CustomPropertyLoader
+- route:
+    id: route-352a
+    nodePrefixId: route-7ba
+    from:
+      id: from-10f8
+      uri: direct
+      parameters:
+        name: direct2bean
+      steps:
+        - bean:
+            id: bean-9b23
+            ref: CustomPropertyLoader
+            method: load
+            beanType: CustomPropertyLoader
