@@ -1,0 +1,36 @@
+- route:
+    id: SQL-Create-route-61b8
+    nodePrefixId: route-eed
+    from:
+      id: from-2b69
+      uri: file
+      parameters:
+        directoryName: Fileshare/4-internal-format
+      steps:
+        - log:
+            id: log-1f64
+            message: "Before Script: ${body}"
+        - to:
+            id: to-86f2
+            uri: language
+            parameters:
+              languageName: xpath
+              script: //article/title
+        - log:
+            id: log-f669
+            message: "After XPath: ${body}"
+- route:
+    id: route-772d
+    nodePrefixId: route-ef3
+    from:
+      id: from-9b21
+      uri: direct
+      parameters:
+        name: d4
+      steps:
+        - script:
+            id: script-bb93
+            expression:
+              xpath:
+                id: xpath-7f8a
+                expression: //article/title
