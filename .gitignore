@@ -1,3 +1,6 @@
+.export
+.camel-jbang
+
 # Compiled class file
 *.class
 

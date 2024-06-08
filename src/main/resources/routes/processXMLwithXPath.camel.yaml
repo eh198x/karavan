@@ -16,6 +16,37 @@
             parameters:
               languageName: xpath
               script: //article/title
+        - script:
+            id: script-1f8e
+            expression:
+              groovy:
+                id: groovy-3799
+                expression: |
+                  import java.util.Properties
+                  import java.io.FileInputStream
+                  import java.util.logging.Logger
+
+                  Logger logger = Logger.getLogger("")
+                  Properties props = new Properties()
+
+                  try {
+                      // Load properties from the application.properties file
+                      FileInputStream fis = new FileInputStream("application.properties")
+                      props.load(fis)
+                      fis.close()
+                  } catch (IOException e) {
+                      logger.severe("Error loading properties file: " + e.getMessage())
+                  }
+
+                  // Fetch the specific property
+                  String schemaCy = props.getProperty("custom.Cyprus.schema")
+                  String communicationCy = props.getProperty("custom.Cyprus.communication")
+                  
+                  String schemaGr = props.getProperty("custom.Greece.schema")
+                  String communicationGr = props.getProperty("custom.Greece.communication")
+
+                  // Log the schema
+                  logger.info("\nCY Schema: $schemaCy communication: $communicationCy\nGR Schema: $schemaGr communication: $communicationGr")
         - log:
             id: log-f669
             message: "After XPath: ${body}"
