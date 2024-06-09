@@ -38,18 +38,18 @@
             otherwise:
               id: otherwise-e7b0
               steps:
-                - script:
-                    id: script-bc17
-                    expression:
-                      groovy:
-                        id: groovy-1638
-                        expression: resource:file:./src/main/groovy/internal.groovy
                 - to:
                     id: to-a278
                     uri: file
                     parameters:
                       directoryName: Fileshare/1-internal
                       fileName: ${date:now:ddMMyyyHHmmss}_${exchangeId}.xml
+                - script:
+                    id: script-bc17
+                    expression:
+                      groovy:
+                        id: groovy-1638
+                        expression: resource:file:./src/main/groovy/internal.groovy
                 - doTry:
                     id: doTry-83a8
                     doCatch:
