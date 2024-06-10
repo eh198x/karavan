@@ -1,17 +1,23 @@
-- beans:
-    - name: CustomPropertyLoader
-      type: cfl.eua.CustomPropertyLoader
 - route:
-    id: route-352a
-    nodePrefixId: route-7ba
+    id: route-afb5
+    nodePrefixId: route-a74
     from:
-      id: from-10f8
-      uri: direct
+      id: from-8c57
+      uri: netty-http
       parameters:
-        name: direct2bean
+        protocol: http
+        port: "8044"
+        path: internal
+        host: 0.0.0.0
       steps:
-        - bean:
-            id: bean-9b23
-            ref: CustomPropertyLoader
-            method: load
-            beanType: CustomPropertyLoader
+        - log:
+            id: log-79e0
+            message: |+
+              exchangeId:${exchangeId}
+              messageid: ${id}
+              camelId: ${camelId} 
+              date with timestamp: ${date:now-24h:dd/MM/YYYY hh:mm:ss}
+              ${headers.CamelNettyRemoteAddress} 
+              ALL headers:headers ${headers}
+              Variables: ${variables}
+

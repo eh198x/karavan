@@ -12,7 +12,17 @@
       steps:
         - log:
             id: log-0792
-            message: "Headers: ${headers} \\nBody: ${body}"
+            message: |-
+              exchangeId: ${exchangeId}
+              messageid: ${id}
+              camelId: ${camelId} 
+              date with timestamp: ${date:now-24h:dd/MM/YYYY hh:mm:ss}
+              ALL headers:
+              ${headers}
+              Variables: 
+              ${variables}
+              Body: 
+              ${body}
         - choice:
             id: choice-3c90
             when:
