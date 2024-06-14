@@ -36,7 +36,7 @@
 
                   try {
                       // Load properties from the application.properties file
-                      FileInputStream fis = new FileInputStream("application.properties")
+                      FileInputStream fis = new FileInputStream("src/main/resources/application.properties")
                       props.load(fis)
                       fis.close()
                   } catch (IOException e) {

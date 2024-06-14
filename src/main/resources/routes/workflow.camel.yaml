@@ -158,12 +158,12 @@
                   id: to-b023
                   uri: validator
                   parameters:
-                    resourceUri: file:Resources/articles.xsd
+                    resourceUri: file:src/main/resources/xsd/articles.xsd
               - to:
                   id: to-5398
                   uri: xslt
                   parameters:
-                    resourceUri: file:Resources/articles.xslt
+                    resourceUri: file:src/main/resources/xslt/articles.xslt
               - to:
                   id: to-53f5
                   uri: file
@@ -171,8 +171,21 @@
                     directoryName: Fileshare/2-processed
                     keepLastModified: true
         - to:
-            id: to-0ab5
-            uri: kamelet:jms-apache-artemis-sink
+            id: to-bd7f
+            uri: direct
             parameters:
-              destinationName: myAddress0:myQueue0
-              brokerURL: tcp://192.168.49.2:5672
+              name: direct-artemis
+- route:
+    id: Artemis-route-f423
+    nodePrefixId: route-313
+    from:
+      id: from-915d
+      uri: direct
+      parameters:
+        name: direct-artemis
+      steps:
+        - log:
+            id: log-fff7
+            message: |-
+              Artemis route:
+              ${body}

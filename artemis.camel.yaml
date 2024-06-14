@@ -33,8 +33,8 @@
                   id: log-4f3b
                   message: Printing the ${body}
         - to:
-            id: to-6a5c
-            uri: kamelet:jms-amqp-10-sink
+            id: to-b954
+            uri: kamelet:jms-apache-artemis-sink
             parameters:
-              remoteURI: amqp://0.0.0.0:61616
-              destinationName: TestQueue
+              destinationName: wf1
+              brokerURL: tcp://elias:elias@0.0.0.0:61616

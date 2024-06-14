@@ -21,3 +21,23 @@
               ALL headers:headers ${headers}
               Variables: ${variables}
 
+        - to:
+            id: to-c752
+            uri: direct
+            parameters:
+              name: d5
+        - script:
+            id: script-235f
+            expression:
+              groovy:
+                id: groovy-480e
+                expression: System.out.println(System.getProperty("java.class.path"))
+- route:
+    id: d5-route-c8f0
+    nodePrefixId: route-6ea
+    from:
+      id: from-b1dc
+      uri: direct
+      parameters:
+        name: d5
+
