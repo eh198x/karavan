@@ -1,0 +1,23 @@
+- route:
+    id: route-5dba
+    from:
+      id: from-33a1
+      uri: kamelet:timer-source
+      parameters:
+        period: 10000
+        message: Test message generated from a timer
+      steps:
+        - log:
+            id: log-7ac1
+            message: ${body}
+        - to:
+            id: to-30fa
+            uri: amqp
+            parameters:
+              destinationName: EHQueue8
+              connectionFactory: "#bean:artemisConnFactory"
+              username: elias
+              password: elias
+- beans:
+    - name: artemisConnFactory
+      type: org.apache.qpid.jms.JmsConnectionFactory

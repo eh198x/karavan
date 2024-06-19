@@ -3,7 +3,10 @@ camel run database.camel.yaml  --deps=org.apache.camel:camel-netty-http:4.5.0,or
 
 camel run database.camel.yaml  --deps=org.apache.camel:camel-netty-http:4.5.0,org.apache.groovy:groovy-xml:4.0.21,org.apache.groovy:groovy-json:4.0.21
 
-camel run artemis.camel.yaml  --deps=org.apache.camel:camel-netty-http:4.5.0,org.apache.groovy:groovy-xml:4.0.21,org.apache.groovy:groovy-json:4.0.21
+#old
+camel run src/main/resources/routes/artemis.camel.yaml  --deps=org.apache.camel:camel-netty-http:4.5.0,org.apache.groovy:groovy-xml:4.0.21,org.apache.groovy:groovy-json:4.0.21,org.apache.activemq:artemis-jms-client:2.35.0
+
+camel run src/main/resources/routes/artemisCF.camel.yaml  --deps=org.apache.camel:camel-netty-http:4.5.0,org.apache.groovy:groovy-xml:4.0.21,org.apache.groovy:groovy-json:4.0.21,org.apache.qpid:qpid-jms-client:2.5.0
 
 camel run ftp.camel.yaml  --deps=org.apache.camel:camel-netty-http:4.5.0,org.apache.groovy:groovy-xml:4.0.21,org.apache.groovy:groovy-json:4.0.21
 
