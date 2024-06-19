@@ -12,12 +12,13 @@ public class ArtemisConfig {
         // Specify the broker URL for AMQP
         String brokerURL = "amqp://127.0.0.1:61616";
 
-        // Specify the username and password
-        String username = "elias";
-        String password = "elias";
+        // Specify the username and password -- NOT NEEDED
+        //String username;// = "elias";
+        //String password;// = "elias";
 
         // Create a connection factory for AMQP
-        JmsConnectionFactory connectionFactory = new JmsConnectionFactory(username, password, brokerURL);
+        //JmsConnectionFactory connectionFactory = new JmsConnectionFactory(username, password, brokerURL);
+        JmsConnectionFactory connectionFactory = new JmsConnectionFactory("", "", brokerURL);
         
         return connectionFactory;
     }

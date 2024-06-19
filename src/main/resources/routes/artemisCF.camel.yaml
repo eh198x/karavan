@@ -14,7 +14,7 @@
             id: to-30fa
             uri: amqp
             parameters:
-              destinationName: EHQueue8
+              destinationName: EHQueue9
               connectionFactory: "#bean:artemisConnFactory"
               username: elias
               password: elias
