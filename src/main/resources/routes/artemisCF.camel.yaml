@@ -1,6 +1,3 @@
-- beans:
-    - name: artemisConnFactory
-      type: org.apache.qpid.jms.JmsConnectionFactory
 - route:
     id: route-5dba
     from:
@@ -17,7 +14,10 @@
             id: to-8837
             uri: amqp
             parameters:
-              destinationName: EliasHadj1
+              destinationName: TestQueue1
               connectionFactory: "#bean:artemisConnFactory"
               password: "{{camel.amqp.password}}"
               username: "{{camel.amqp.username}}"
+- beans:
+    - name: artemisConnFactory
+      type: org.apache.qpid.jms.JmsConnectionFactory
