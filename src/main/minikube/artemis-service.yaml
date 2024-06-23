@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: artemis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: artemis
+  template:
+    metadata:
+      labels:
+        app: artemis
+    spec:
+      containers:
+        - name: artemis
+          image: apache/activemq-artemis:latest
+          ports:
+            - containerPort: 8161
+              name: dashboard
+            - containerPort: 5672
+              name: amqp
+          # Add other ports if needed for MQTT, STOMP, etc.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: artemis-service
+spec:
+  selector:
+    app: artemis
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8161
+      name: dashboard
+    - protocol: TCP
+      port: 5672
+      targetPort: 5672
+      name: amqp
+  type: NodePort
+
+
