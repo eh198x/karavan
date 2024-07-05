@@ -5,7 +5,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Types;
 
-String url = "jdbc:postgresql://192.168.49.2:32150/postgres"
+String ip = "192.168.49.2"
+String port = "30601"
+String dbname = "postgres"
+
+//String url = "jdbc:postgresql://192.168.49.2:30601/postgres"
+String url = "jdbc:postgresql://" + ip + ":" + port + "/" + dbname
+
 String user = "postgres"
 String password = "password"
 
