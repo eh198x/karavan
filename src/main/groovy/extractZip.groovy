@@ -1,13 +1,38 @@
 import java.util.zip.*
 import java.util.logging.Logger
 import org.apache.camel.Exchange
-  
-//String zipFileName = myFile.absolutePath
-//String inputDir = "Fileshare/1-INPUT"
-def outputDir = "Fileshare/2-EXTRACTS"
+
+import java.util.Properties
 
 Logger LOGGER = Logger.getLogger("")
+
+Properties props = new Properties()
+
+//String zipFileName = myFile.absolutePath
+//String inputDir = "Fileshare/1-INPUT"
+
+try {
+    // Load properties from the application.properties file
+    FileInputStream fis = new FileInputStream("src/main/resources/application.properties")
+    props.load(fis)
+    fis.close()
+} catch (IOException e) {
+    LOGGER.severe("Error loading properties file: " + e.getMessage())
+}
+
+
 //LOGGER.info("Received a new file upload...\n")
+
+def outputDir = props.getProperty("custom.directory.extracts")
+LOGGER.info("outputDir:" + outputDir)
+
+if (outputDir?.isEmpty() || outputDir == null) {
+    outputDir = "Fileshare/2-Extracts-MANUAL"
+} else {
+    // Handle the case when outputDir is not empty
+    // Your code here...
+}
+
 
 process(outputDir, exchange, LOGGER)
 

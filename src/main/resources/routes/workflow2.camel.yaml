@@ -4,7 +4,7 @@
       id: from-25e2
       uri: file
       parameters:
-        directoryName: Fileshare/1-uploads
+        directoryName: "{{custom.directory.downloads}}"
         recursive: true
       steps:
         - step:
@@ -23,7 +23,7 @@
       id: from-dc22
       uri: file
       parameters:
-        directoryName: Fileshare/2-EXTRACTS
+        directoryName: "{{custom.directory.extracts}}"
         recursive: true
         filterFile: ${file:name.ext} == "xml"
       steps:
@@ -42,4 +42,4 @@
             id: to-935b
             uri: file
             parameters:
-              directoryName: Fileshare/3-XML_ONLY
+              directoryName: "{{custom.directory.xmlonly}}"
