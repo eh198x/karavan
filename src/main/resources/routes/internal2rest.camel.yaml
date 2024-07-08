@@ -5,10 +5,10 @@
       id: from-4854
       uri: kamelet:postgresql-source
       parameters:
-        serverName: 192.168.49.2
-        serverPort: "32150"
-        username: postgres
-        password: password
+        serverName: "{{custom.postgres.ip}}"
+        serverPort: "{{custom.postgres.port}}"
+        username: "{{custom.postgres.username}}"
+        password: "{{custom.postgres.password}}"
         query: select * from public.workflow_details where status='W'
         databaseName: postgres
       steps:
@@ -35,10 +35,10 @@
             id: to-2066
             uri: kamelet:postgresql-sink
             parameters:
-              serverName: 192.168.49.2
-              serverPort: "32150"
-              username: postgres
-              password: password
+              serverName: "{{custom.postgres.ip}}"
+              serverPort: "{{custom.postgres.port}}"
+              username: "{{custom.postgres.username}}"
+              password: "{{custom.postgres.password}}"
               query: >-
                 UPDATE public.workflow_details SET status='P' where
                 id=:#${exchangeProperty.recid};
