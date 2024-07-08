@@ -1,0 +1,45 @@
+- route:
+    id: route-929d
+    from:
+      id: from-25e2
+      uri: file
+      parameters:
+        directoryName: Fileshare/1-uploads
+        recursive: true
+      steps:
+        - step:
+            id: step-8fcf
+            steps:
+              - script:
+                  id: script-9f42
+                  expression:
+                    groovy:
+                      id: groovy-e2cd
+                      expression: resource:file:./src/main/groovy/extractZip.groovy
+- route:
+    id: select-xml-route-eb09
+    nodePrefixId: route-aba
+    from:
+      id: from-dc22
+      uri: file
+      parameters:
+        directoryName: Fileshare/2-EXTRACTS
+        recursive: true
+        filterFile: ${file:name.ext} == "xml"
+      steps:
+        - log:
+            id: log-b96e
+            message: |-
+              exchangeId: ${exchangeId}
+              messageid: ${id}
+              camelId: ${camelId} 
+              date with timestamp: ${date:now-24h:dd/MM/YYYY hh:mm:ss}
+              ALL headers:
+              ${headers}
+              Variables: 
+              ${variables}
+        - to:
+            id: to-935b
+            uri: file
+            parameters:
+              directoryName: Fileshare/3-XML_ONLY
