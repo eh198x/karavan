@@ -35,7 +35,7 @@
                 expression: resource:file:src/main/groovy/rest-client.groovy
         - log:
             id: log-9b49
-            message: ${body}
+            message: "After script:: Status:[${header.RespStatus}], Body:[${body}]"
 - route:
     id: route-fa06
     nodePrefixId: route-37d

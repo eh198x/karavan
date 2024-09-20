@@ -18,8 +18,13 @@ def sendPostRequest(String url, Map < String, Object > payload) {
         postRequest.setHeader("Content-Type", "application/json")
         CloseableHttpResponse response = httpClient.execute(postRequest)
         try {
-            println("Response Status: ${response.getCode()}")
-            println("Response Body: ${response.getEntity().getContent().text}")
+            def respStatus = response.getCode()
+            def respBody = response.getEntity().getContent().text
+            println("Response Status: ${respStatus}")
+            println("Response Body: ${respBody}")
+
+            exchange.getIn().setHeader("RespStatus", String.valueOf(respStatus));
+            exchange.getIn().setBody(respBody)
         } finally {
             response.close()
         }
@@ -28,9 +33,8 @@ def sendPostRequest(String url, Map < String, Object > payload) {
     }
 }
 
-// Example usage
-exchange.getIn().setBody("Hello Rest client from Karavan rest-client!")
-println 'Until here all good'
+//exchange.getIn().setBody("Hello Rest client from Karavan rest-client!")
+//println 'Until here all good'
 
 def payload = [id: 0, petId: 0, quantity: 0, shipDate: '2024-09-20T12:18:35.352Z', status: 'placed', complete: true]
 
@@ -38,4 +42,4 @@ def url = 'https://petstore.swagger.io/v2/store/order'
 
 sendPostRequest(url, payload)
 
-println 'REST call ended!'
+//println 'REST call ended!'
