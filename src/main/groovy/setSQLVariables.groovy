@@ -1,16 +1,16 @@
 import java.util.logging.Logger
 import org.apache.camel.Exchange
 
-Logger LOGGER = Logger.getLogger("")
+Logger logger = Logger.getLogger("")
 
-process(exchange, LOGGER)
+process(exchange, logger)
 
-def process(Exchange exchange, Logger LOGGER) throws Exception {
+def process(Exchange exchange, Logger logger) throws Exception {
     try {
-        setVariables(exchange,LOGGER)
+        setVariables(exchange,logger)
     } catch (Exception e) {
         // Log the exception details
-        LOGGER.info("EXCHANGE ID: ${exchangeId} - Exception occurred: ${e.message}")
+        logger.info("EXCHANGE ID: ${exchangeId} - Exception occurred: ${e.message}")
         e.printStackTrace() // Print the stack trace (optional)
 
         // Rethrow the exception if needed
@@ -18,7 +18,7 @@ def process(Exchange exchange, Logger LOGGER) throws Exception {
     }
 }
 
-def setVariables(Exchange exchange, Logger LOGGER) throws Exception {
+def setVariables(Exchange exchange, Logger logger) throws Exception {
     def exchangeId = exchange.getExchangeId()     
 
     /*
@@ -39,5 +39,5 @@ def setVariables(Exchange exchange, Logger LOGGER) throws Exception {
     exchange.setProperty("title", title)
     exchange.setProperty("author", author)
     //exchange.setProperty("update_workflow_status", "UPDATE public.workflow SET status='AA' WHERE id = $recid");
-    LOGGER.info("EXCHANGE ID: ${exchangeId} Setting title: $title, author: $author")
+    logger.info("EXCHANGE ID: ${exchangeId} Setting title: $title, author: $author")
 }

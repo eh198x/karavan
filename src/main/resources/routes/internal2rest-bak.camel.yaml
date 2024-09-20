@@ -12,6 +12,11 @@
         query: select * from public.workflow_details where status='W'
         databaseName: postgres
       steps:
+        - to:
+            id: to-5977
+            uri: file
+            parameters:
+              directoryName: Fileshare/01-SFTP
         - log:
             id: log-377f
             message: "Printing data from SQL source: ${body}"
@@ -63,4 +68,17 @@
       steps:
         - log:
             id: log-70b6
+            message: ${body}
+- route:
+    id: route-206f
+    nodePrefixId: route-69a
+    from:
+      id: from-d77d
+      uri: file
+      parameters:
+        directoryName: Fileshare/Elias
+        recursive: true
+      steps:
+        - log:
+            id: log-a226
             message: ${body}

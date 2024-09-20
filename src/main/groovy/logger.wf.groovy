@@ -3,11 +3,11 @@ import org.apache.camel.Exchange
 import java.io.File
 
 
-Logger LOGGER = Logger.getLogger("")
-//LOGGER.info("Received a new file upload...\n")
-process(exchange, LOGGER)
+Logger logger = Logger.getLogger("")
+//logger.info("Received a new file upload...\n")
+process(exchange, logger)
 
-def process(Exchange exchange, Logger LOGGER) throws Exception {    
+def process(Exchange exchange, Logger logger) throws Exception {    
 
     def exchangeId = exchange.getExchangeId() // Access the Exchange ID
 
@@ -16,7 +16,7 @@ def process(Exchange exchange, Logger LOGGER) throws Exception {
       exchange.setProperty("myFile", myFile.absolutePath) // Use absolute path for clarity
 
 
-    LOGGER.info("EXCHANGE ID: ${exchangeId} - Workflow started for file: ${myFile}")
+    logger.info("EXCHANGE ID: ${exchangeId} - Workflow started for file: ${myFile}")
 
 
 }

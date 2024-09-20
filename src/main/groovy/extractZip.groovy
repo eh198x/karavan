@@ -4,7 +4,7 @@ import org.apache.camel.Exchange
 
 import java.util.Properties
 
-Logger LOGGER = Logger.getLogger("")
+Logger logger = Logger.getLogger("")
 
 Properties props = new Properties()
 
@@ -17,14 +17,14 @@ try {
     props.load(fis)
     fis.close()
 } catch (IOException e) {
-    LOGGER.severe("Error loading properties file: " + e.getMessage())
+    logger.severe("Error loading properties file: " + e.getMessage())
 }
 
 
-//LOGGER.info("Received a new file upload...\n")
+//logger.info("Received a new file upload...\n")
 
 def outputDir = props.getProperty("custom.directory.extracts")
-LOGGER.info("outputDir:" + outputDir)
+logger.info("outputDir:" + outputDir)
 
 if (outputDir?.isEmpty() || outputDir == null) {
     outputDir = "Fileshare/2-Extracts-MANUAL"
@@ -34,10 +34,10 @@ if (outputDir?.isEmpty() || outputDir == null) {
 }
 
 
-process(outputDir, exchange, LOGGER)
+process(outputDir, exchange, logger)
 
 //UnZip archive
-def process(String outputDir, Exchange exchange, Logger LOGGER) throws Exception {
+def process(String outputDir, Exchange exchange, Logger logger) throws Exception {
     def myFile = exchange.getIn().getBody(File. class)
     def filePath = myFile.absolutePath
     //Relative path 
@@ -46,8 +46,8 @@ def process(String outputDir, Exchange exchange, Logger LOGGER) throws Exception
     String pathWithoutFilename = myFile.getParentFile().getAbsolutePath();
     String parentFilename = myFile.getParentFile().getName();
     outputDir = outputDir + File.separator + parentFilename
-    LOGGER.info("Printing parent file name:" + parentFilename)
-    LOGGER.info("Printing outputDir:" + outputDir)
+    logger.info("Printing parent file name:" + parentFilename)
+    logger.info("Printing outputDir:" + outputDir)
     def exchangeId = exchange.getExchangeId()
     byte [] buffer = new byte [1024]
     ZipInputStream zis = new ZipInputStream(new FileInputStream(filePath))
@@ -79,9 +79,9 @@ def process(String outputDir, Exchange exchange, Logger LOGGER) throws Exception
     zis.close()
 }
 
-//LOGGER.info("Printing file path without filename:" + pathWithoutFilename)
-//process(exchange, LOGGER)
-//extract(exchange, LOGGER)
+//logger.info("Printing file path without filename:" + pathWithoutFilename)
+//process(exchange, logger)
+//extract(exchange, logger)
 
 /*
 //Zip files  

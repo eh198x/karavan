@@ -6,14 +6,14 @@ import java.util.logging.Logger
 //import groovy.json.JsonSlurper
 
 
-Logger LOGGER = Logger.getLogger("")
-LOGGER.info("=====SQL Create-Received a new file upload...\n")
+Logger logger = Logger.getLogger("")
+logger.info("=====SQL Create-Received a new file upload...\n")
 
-//processRest(  LOGGER)
-process(exchange, LOGGER)
+//processRest(  logger)
+process(exchange, logger)
 
 /*
-def processRest( Logger LOGGER ) throws Exception {
+def processRest( Logger logger ) throws Exception {
 
  
 def restEndpoint = "https://petstore.swagger.io/oauth/token"  // OAuth2 token endpoint
@@ -44,11 +44,11 @@ println "Access Token: $accessToken"
  */
 
 
-def process(Exchange exchange, Logger LOGGER ) throws Exception {
+def process(Exchange exchange, Logger logger ) throws Exception {
      
     def xmlStream = exchange.getIn().getBody(File.class);  
   
-    LOGGER.info("===== Printing xml file:" + xmlStream )
+    logger.info("===== Printing xml file:" + xmlStream )
   
     def articles = new XmlParser().parse(xmlStream)
 

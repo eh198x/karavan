@@ -1,0 +1,76 @@
+- route:
+    id: route-33d7-REST
+    nodePrefixId: REST-route-688
+    from:
+      id: from-c5fd
+      uri: file
+      parameters:
+        directoryName: Fileshare/01-SFTP
+      steps:
+        - log:
+            id: log-887f
+            message: ${body}
+        - script:
+            id: script-63be
+            expression:
+              groovy:
+                id: groovy-e2cc
+                expression: resource:file:./src/main/groovy/parse-json.groovy
+        - log:
+            id: log-29eb
+            message: >-
+              After REST call:: Body: [${body}], Record ID:
+              [${exchangeProperty.recid}]
+        - delay:
+            id: delay-1a49
+            expression:
+              constant:
+                id: constant-122c
+                expression: "1000"
+        - log:
+            id: log-c2d9
+            message: "Reply from SQL Sink: ${body}"
+- route:
+    id: route-f81a
+    nodePrefixId: route-88c
+    from:
+      id: from-61f7
+      uri: direct
+      parameters:
+        name: direct-test1
+      steps:
+        - to:
+            id: to-2066
+            uri: kamelet:postgresql-sink
+            parameters:
+              serverName: "{{custom.postgres.ip}}"
+              serverPort: "{{custom.postgres.port}}"
+              username: "{{custom.postgres.username}}"
+              password: "{{custom.postgres.password}}"
+              query: >-
+                UPDATE public.workflow_details SET status='P' where
+                id=:#${exchangeProperty.recid};
+              databaseName: postgres
+        - to:
+            id: to-74e4
+            uri: rest
+            parameters:
+              method: post
+              host: 0.0.0.0:8044
+              path: internal
+        - log:
+            id: log-70b6
+            message: ${body}
+- route:
+    id: route-206f
+    nodePrefixId: route-69a
+    from:
+      id: from-d77d
+      uri: file
+      parameters:
+        directoryName: Fileshare/Elias
+        recursive: true
+      steps:
+        - log:
+            id: log-a226
+            message: ${body}

@@ -7,35 +7,35 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.io.File
 
-Logger LOGGER = Logger.getLogger("")
-LOGGER.info("Received a new file upload...\n")
-process(exchange, LOGGER)
+Logger logger = Logger.getLogger("")
+logger.info("Received a new file upload...\n")
+process(exchange, logger)
 
-def process(Exchange exchange, Logger LOGGER) throws Exception {
-                    LOGGER.info(String.format("Found part with key: %s and value: %s ", attribute.getName(), attribute.getValue()))
+def process(Exchange exchange, Logger logger) throws Exception {
+                    logger.info(String.format("Found part with key: %s and value: %s ", attribute.getName(), attribute.getValue()))
 
     NettyHttpMessage nettyHttpMessage = exchange.getIn(NettyHttpMessage.class)
     HttpPostRequestDecoder postRequest = new HttpPostRequestDecoder(nettyHttpMessage.getHttpRequest())
-    getHttpDataAttributes(postRequest, LOGGER)
+    getHttpDataAttributes(postRequest, logger)
    
 }
 
-def getHttpDataAttributes(HttpPostRequestDecoder request, Logger LOGGER) {
+def getHttpDataAttributes(HttpPostRequestDecoder request, Logger logger) {
     try {
         for (InterfaceHttpData part : request.getBodyHttpDatas()) {
             if (part instanceof MixedAttribute) {
                 Attribute attribute = (MixedAttribute) part
-                LOGGER.info(String.format("Found part with key: %s and value: %s ", attribute.getName(), attribute.getValue()))
+                logger.info(String.format("Found part with key: %s and value: %s ", attribute.getName(), attribute.getValue()))
             } else if (part instanceof MixedFileUpload) {
                 MixedFileUpload attribute = (MixedFileUpload) part
-                LOGGER.info(String.format("Found part with key: %s and value: %s ", attribute.getName(), attribute.getFilename()))
+                logger.info(String.format("Found part with key: %s and value: %s ", attribute.getName(), attribute.getFilename()))
                 saveFile(attribute)
                
             }
         }
     } catch (IOException e) {
         String errorMsg = String.format("Cannot parse request")
-        LOGGER.error(errorMsg,e)
+        logger.error(errorMsg,e)
     } finally {        
     }  
 }

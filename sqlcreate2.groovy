@@ -4,21 +4,21 @@ import org.apache.camel.Exchange
 import java.util.logging.Logger
 
 
-Logger LOGGER = Logger.getLogger("")
-LOGGER.info("=====SQL Create-Received a new file upload...\n")
+Logger logger = Logger.getLogger("")
+logger.info("=====SQL Create-Received a new file upload...\n")
 
-process(exchange, LOGGER)
+process(exchange, logger)
 
-def process(Exchange exchange, Logger LOGGER ) throws Exception {
+def process(Exchange exchange, Logger logger ) throws Exception {
     //def xmlFile = exchange.getIn(File.class)
     
-    LOGGER.info("===== Before printing xml file")
+    logger.info("===== Before printing xml file")
 
     //Object xmlFile = exchange.getIn().getBody(); //Works
 
     def xmlStream = exchange.getIn().getBody(File.class); //Works
   
-    LOGGER.info("===== Printing xml file:" + xmlStream )
+    logger.info("===== Printing xml file:" + xmlStream )
  
     // Parse the XML content using XmlParser
     def articles = new XmlParser().parse(xmlStream)

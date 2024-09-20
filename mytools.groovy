@@ -7,22 +7,22 @@ import org.apache.logging.log4j.Logger
 
 import groovy.json.JsonSlurper
 
-def process(Exchange exchange, Logger LOGGER ) throws Exception {
+def process(Exchange exchange, Logger logger ) throws Exception {
      
     def xmlStream = exchange.getIn().getBody(File.class);  
   
-    LOGGER.info("===== Identified file: " + xmlStream )
-    LOGGER.warn("===== just a warning" )
-    LOGGER.error("===== an error!" )
+    logger.info("===== Identified file: " + xmlStream )
+    logger.warn("===== just a warning" )
+    logger.error("===== an error!" )
 }
 
 
-def jsonProcess(Exchange exchange, Logger LOGGER ) throws Exception {
+def jsonProcess(Exchange exchange, Logger logger ) throws Exception {
      
 
     def jsonResponse = exchange.getIn().getBody(String.class);  
   
-    LOGGER.info("Into tools.jsonProcess... jsonResponse:"+ jsonResponse)
+    logger.info("Into tools.jsonProcess... jsonResponse:"+ jsonResponse)
 
     def parsedResponse = new JsonSlurper().parseText(jsonResponse)
     
@@ -33,16 +33,16 @@ def jsonProcess(Exchange exchange, Logger LOGGER ) throws Exception {
     def status = parsedResponse.status
 
     // Log the extracted values
-    LOGGER.info("ID: $id,  Exchange ID: $exchangeId, Message: $message, Status: $status")
+    logger.info("ID: $id,  Exchange ID: $exchangeId, Message: $message, Status: $status")
 
     try {
         def recid = id.toInteger()
         exchange.setProperty("recid", recid)
         //exchange.setProperty("update_workflow_status", "UPDATE public.workflow SET status='AA' WHERE id = $recid");
-        LOGGER.info("Setting recid: $recid")
+        logger.info("Setting recid: $recid")
         exchange.setProperty("recmessage", message)
     } catch (NumberFormatException e) {
-        LOGGER.error("Error converting 'id' to integer: ${e.message}")
+        logger.error("Error converting 'id' to integer: ${e.message}")
         // Handle the error (e.g., set a default value or log an error message)
     }
     

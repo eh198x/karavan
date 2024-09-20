@@ -4,19 +4,19 @@ import groovy.xml.XmlParser
 import java.util.logging.Logger
 
 
-Logger LOGGER = Logger.getLogger("")
-LOGGER.info("SQL Create-Received a new file upload...\n")
+Logger logger = Logger.getLogger("")
+logger.info("SQL Create-Received a new file upload...\n")
 
-process(  LOGGER)
+process(  logger)
 
-def process(Logger LOGGER) throws Exception {
+def process(Logger logger) throws Exception {
     //def xmlFile = exchange.getIn(File.class)
     
-    LOGGER.info("Before printing xml file")
+    logger.info("Before printing xml file")
 
     def xmlFile = getClass().getResourceAsStream("articles.xml")
  
-    LOGGER.info("Printing xml file:" + xmlFile )
+    logger.info("Printing xml file:" + xmlFile )
 
     // Parse the XML content using XmlParser
     def articles = new XmlParser().parse(xmlFile)

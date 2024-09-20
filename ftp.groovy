@@ -12,44 +12,45 @@ import org.apache.logging.log4j.LogManager
 //private static final Logger logger = LogManager.getLogger(Log4j2Example.class);
 
 
+
 try{
-    System.setProperty("log4j.configurationFile", "Configuration/log4j2.yaml") // Load the Log4j2 configuration from the XML file
+    System.setProperty("log4j.configurationFile", "Configuration/log4j2.yaml") 
 
     System.setProperty("log4j2.debug", "true")
 
-    //Logger LOGGER = LogManager.getRootLogger();
-    Logger LOGGER = LogManager.getLogger("org.apache.logging.log4j.test2")
+    //Logger logger = LogManager.getRootLogger();
+    Logger logger = LogManager.getLogger("org.apache.logging.log4j.test2")
 
     // Try logging a debug message
-    if (LOGGER.getName() != "") {
-         System.out.println("Logger ["+ LOGGER.getName()+"] is available and configured for debug level");
+    if (logger.getName() != "") {
+        logger.info("Logger ["+ logger.getName()+"] is available and configured for debug level");
     } else {
         // Logger might not be configured for debug level, or it might not exist
-        System.out.println("**WARNING:** Logger existence or debug level configuration unclear");
+        logger.info("**WARNING:** Logger existence or debug level configuration unclear");
     }
 
-    LOGGER.info("just a msg")
-    LOGGER.warn("just a msg")
-    LOGGER.error("just a msg")
-    //LOGGER.info("Configuration File Defined To Be :: "+System.getProperty("log4j.configurationFile"));
+    logger.info("just a msg")
+    logger.warn("just a msg")
+    logger.error("just a msg")
+    //logger.info("Configuration File Defined To Be :: "+System.getProperty("log4j.configurationFile"));
   
-    //LOGGER.info("2 Configuration File Defined To Be :: "+System.getProperty("log4j.configurationFile"));
+    //logger.info("2 Configuration File Defined To Be :: "+System.getProperty("log4j.configurationFile"));
 
 
-    //def LOGGER = LogManager.getLogger("Syslog") 
+    //def logger = LogManager.getLogger("Syslog") 
  
-    //tools.process(exchange, LOGGER)
+    //tools.process(exchange, logger)
 
 }catch(Exception e){
     e.printStackTrace();
 }
 
 /*
-def process(Exchange exchange, Logger LOGGER ) throws Exception {
+def process(Exchange exchange, Logger logger ) throws Exception {
      
 def xmlStream = exchange.getIn().getBody(File.class);  
   
-LOGGER.info("===== Identified file: " + xmlStream )
+logger.info("===== Identified file: " + xmlStream )
   
   
 }

@@ -1,24 +1,24 @@
 import java.util.logging.Logger
 import org.apache.camel.Exchange
 
-Logger LOGGER = Logger.getLogger("")
+Logger logger = Logger.getLogger("")
 
-//LOGGER.info("[ERROR WF] groovy script\n")
+//logger.info("[ERROR WF] groovy script\n")
 
-process(exchange, LOGGER)
+process(exchange, logger)
 
-//def process(Exception exception, Exchange exchange, Logger LOGGER) throws Exception {
-def process(Exchange exchange, Logger LOGGER) throws Exception {
+//def process(Exception exception, Exchange exchange, Logger logger) throws Exception {
+def process(Exchange exchange, Logger logger) throws Exception {
     try {
         def exchangeId = exchange.getExchangeId()     
 
         String exceptionMessage = exchange.getIn().getHeader("ExceptionMessage", String.class)
 
-        LOGGER.info("EXCHANGE ID: ${exchangeId} - Exception message: ${exceptionMessage}\n")
+        logger.info("EXCHANGE ID: ${exchangeId} - Exception message: ${exceptionMessage}\n")
 
     } catch (Exception e) {
         // Log the exception details
-        LOGGER.info("EXCHANGE ID: ${exchangeId} - Exception occurred: ${e.message}")
+        logger.info("EXCHANGE ID: ${exchangeId} - Exception occurred: ${e.message}")
         e.printStackTrace() // Print the stack trace (optional)
 
         // Rethrow the exception if needed

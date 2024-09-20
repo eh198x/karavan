@@ -9,11 +9,11 @@ import java.io.File
 
 //import org.apache.camel.support.ExchangeHelper
 
-Logger LOGGER = Logger.getLogger("")
-//LOGGER.info("Received a new XML...\n")
-process(exchange, LOGGER)
+Logger logger = Logger.getLogger("")
+//logger.info("Received a new XML...\n")
+process(exchange, logger)
 
-def process(Exchange exchange, Logger LOGGER) throws Exception {
+def process(Exchange exchange, Logger logger) throws Exception {
     //String content = exchange.getIn(String.class)
     ////NettyHttpMessage nettyHttpMessage = exchange.getIn(File.class)
     String body = exchange.getIn().getBody(String.class);
@@ -23,12 +23,12 @@ def process(Exchange exchange, Logger LOGGER) throws Exception {
     // + "\nBody:\n" + body + "\n")
 
     //HttpPostRequestDecoder postRequest = new HttpPostRequestDecoder(nettyHttpMessage.getHttpRequest())
-    //getHttpDataAttributes(postRequest, LOGGER)
+    //getHttpDataAttributes(postRequest, logger)
    //exchange.getOut().setHeader(Exchange.CONTENT_TYPE, "application/xml")
 
    String response = "<response>Error!</response>"
    //exchange.getOut().setBody(response)
-   LOGGER.info("HTTP method:" + httpMethod + ", Error Response:" + response)
+   logger.info("HTTP method:" + httpMethod + ", Error Response:" + response)
    request.body= response
 }
 

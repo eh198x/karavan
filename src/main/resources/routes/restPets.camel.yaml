@@ -1,0 +1,52 @@
+- route:
+    id: File-route-773d
+    nodePrefixId: route-4a2
+    from:
+      id: from-150f
+      uri: file
+      parameters:
+        directoryName: Fileshare/01-SFTP2
+      steps:
+        - log:
+            id: log-89d2
+            message: ${body}
+        - to:
+            id: to-fc8e
+            uri: direct
+            parameters:
+              name: Direct-Rest-Script
+- route:
+    id: Rest-route-2c02
+    nodePrefixId: route-5f8
+    from:
+      id: from-4bc5
+      uri: direct
+      parameters:
+        name: Direct-Rest-Script
+      steps:
+        - log:
+            id: log-2034
+            message: "In Direct: ${body}"
+        - script:
+            id: script-7ec1
+            expression:
+              groovy:
+                id: groovy-010b
+                expression: resource:file:src/main/groovy/rest-client.groovy
+        - log:
+            id: log-9b49
+            message: ${body}
+- route:
+    id: route-fa06
+    nodePrefixId: route-37d
+    from:
+      id: from-a5c9
+      uri: timer
+      parameters:
+        timerName: aTimer
+      steps:
+        - to:
+            id: to-d3a4
+            uri: direct
+            parameters:
+              name: Direct-Rest-Script
