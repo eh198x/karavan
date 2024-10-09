@@ -32,10 +32,15 @@
             expression:
               groovy:
                 id: groovy-010b
-                expression: resource:file:src/main/groovy/rest-client.groovy
+                expression: resource:file:src/main/groovy/rest-client-ByStatus.groovy
         - log:
             id: log-9b49
             message: "After script:: Status:[${header.RespStatus}], Body:[${body}]"
+        - to:
+            id: to-770a
+            uri: direct
+            parameters:
+              name: Direct-POST-REST
 - route:
     id: route-fa06
     nodePrefixId: route-37d
@@ -44,9 +49,28 @@
       uri: timer
       parameters:
         timerName: aTimer
+        period: "60000"
       steps:
         - to:
             id: to-d3a4
             uri: direct
             parameters:
               name: Direct-Rest-Script
+- route:
+    id: Post-REST-route-0208
+    nodePrefixId: route-588
+    from:
+      id: from-2bdc
+      uri: direct
+      parameters:
+        name: Direct-POST-REST
+      steps:
+        - log:
+            id: log-997b
+            message: "Before sending POST:: body:: ${body}"
+        - script:
+            id: script-6ac9
+            expression:
+              groovy:
+                id: groovy-ad04
+                expression: resource:file:src/main/groovy/rest-post-client.groovy
