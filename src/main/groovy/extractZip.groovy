@@ -53,7 +53,7 @@ def process(String outputDir, Exchange exchange, Logger logger) throws Exception
     ZipInputStream zis = new ZipInputStream(new FileInputStream(filePath))
     ZipEntry zipEntry = zis.getNextEntry()
     while (zipEntry != null) {
-        File newFile = new File(outputDir + File.separator + exchangeId + File.separator, zipEntry.name)
+        File newFile = new File(outputDir + File.separator + exchangeId + File.separator + zipEntry.name)
         //File newFile = new File(outputDir+ File.separator + exchangeId + File.separator, pathWithoutFilename)
         if (zipEntry.isDirectory()) {
             if (!newFile.isDirectory() && !newFile.mkdirs()) {

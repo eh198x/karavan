@@ -39,12 +39,6 @@
                   - log:
                       id: log-f255
                       message: HTTP Method not allowed
-                  - to:
-                      id: to-b855
-                      uri: language
-                      parameters:
-                        languageName: groovy
-                        script: resource:file:./src/main/groovy/internal.error.groovy
             otherwise:
               id: otherwise-e7b0
               steps:
