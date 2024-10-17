@@ -1,0 +1,209 @@
+- route:
+    id: Repeat-Timer-route-abe1
+    nodePrefixId: route-65a
+    from:
+      id: from-6b49
+      uri: timer
+      parameters:
+        timerName: RepeatTimer
+      steps:
+        - to:
+            id: to-98d7
+            uri: direct
+            parameters:
+              name: LFE-Get-Token-Request-Direct
+- route:
+    id: LFE-Auth-route-7d18
+    nodePrefixId: route-94f
+    from:
+      id: from-d129
+      uri: direct
+      parameters:
+        name: LFE-Get-Token-Request-Direct
+      steps:
+        - setVariables:
+            id: setVariables-86e9
+            variables:
+              - id: setVariable-767d
+                name: lfeUrl
+                expression:
+                  simple:
+                    id: simple-db52
+                    expression: "{{custom.lfe.url}}"
+              - id: setVariable-597f
+                name: lfeUsername
+                expression:
+                  simple:
+                    id: simple-7220
+                    expression: "{{custom.lfe.username}}"
+              - id: setVariable-5aca
+                name: lfePassword
+                expression:
+                  simple:
+                    id: simple-618b
+                    expression: "{{custom.lfe.password}}"
+        - script:
+            id: script-439d
+            expression:
+              groovy:
+                id: groovy-e3a8
+                expression: resource:file:src/main/groovy/body-auth-api.groovy
+        - to:
+            id: to-3334
+            uri: rest
+            parameters:
+              method: post
+              path: override-path-by-script1
+              host: ${lfeUrl}
+        - script:
+            id: script-d9b6
+            expression:
+              groovy:
+                id: groovy-8191
+                expression: resource:file:src/main/groovy/auth-header-set.groovy
+        - to:
+            id: to-1ef2
+            uri: direct
+            parameters:
+              name: LFE-Get-Files-Direct
+- route:
+    id: LFE-Get-Files-route-4214
+    nodePrefixId: route-5bc
+    from:
+      id: from-b324
+      uri: direct
+      parameters:
+        name: LFE-Get-Files-Direct
+      steps:
+        - to:
+            id: to-ef4f
+            uri: rest
+            parameters:
+              method: get
+              path: path-overriden-by-script
+              host: dummy-value
+        - script:
+            id: script-0267
+            expression:
+              groovy:
+                id: groovy-7ae6
+                expression: resource:file:src/main/groovy/process-lfe-files.groovy
+        - choice:
+            id: choice-42eb
+            when:
+              - id: when-d0e9
+                expression:
+                  simple:
+                    id: simple-0e8a
+                    expression: ${body} == null
+                steps:
+                  - log:
+                      id: log-3382
+                      message: Body is null [${body}] from script
+            otherwise:
+              id: otherwise-be4d
+              steps:
+                - to:
+                    id: to-9894
+                    uri: direct
+                    parameters:
+                      name: LFE-process-files-direct
+- route:
+    id: LFE-files-Process-route-0843
+    nodePrefixId: route-a7e
+    from:
+      id: from-acf2
+      uri: direct
+      parameters:
+        name: LFE-process-files-direct
+      steps:
+        - split:
+            id: split-283f
+            expression:
+              groovy:
+                id: groovy-ce4d
+                expression: body
+            steps:
+              - to:
+                  id: to-6c61
+                  uri: direct
+                  parameters:
+                    name: LFE-Download-Direct
+- route:
+    id: LFE-Download-route-682a
+    nodePrefixId: route-d97
+    from:
+      id: from-03f8
+      uri: direct
+      parameters:
+        name: LFE-Download-Direct
+      steps:
+        - script:
+            id: script-ded6
+            expression:
+              groovy:
+                id: groovy-cc0e
+                expression: resource:file:src/main/groovy/setUri-lfe-download.groovy
+        - to:
+            id: to-3210
+            uri: https
+            parameters:
+              httpUri: uri-replaced-by-prev-script
+        - to:
+            id: to-3374
+            uri: file
+            parameters:
+              directoryName: Fileshare<04-LFE-downloads
+              fileName: "{$exchangeProperty.country}_${exchangeId}_${header.filename}"
+        - to:
+            id: to-216e
+            uri: direct
+            parameters:
+              name: LFE-Move-CreateResp-Direct
+- route:
+    id: LFE-Move-File-CreateResponse-route-0615
+    nodePrefixId: route-558
+    from:
+      id: from-b91a
+      uri: direct
+      parameters:
+        name: LFE-Move-CreateResp-Direct
+      steps:
+        - script:
+            id: script-e60e
+            expression:
+              groovy:
+                id: groovy-b868
+                expression: resource:file:src/main/groovy/rest-api-move.groovy
+        - to:
+            id: to-cdd9
+            uri: https
+            parameters:
+              httpUri: uri-replaced
+              httpMethod: PATCH
+        - to:
+            id: to-8a64
+            uri: direct
+            parameters:
+              name: LFE-Create-Resp-Formdata-Direct
+- route:
+    id: Create-Respfile-route-99a8
+    nodePrefixId: route-419
+    from:
+      id: from-c890
+      uri: direct
+      parameters:
+        name: LFE-Create-Resp-Formdata-Direct
+      steps:
+        - script:
+            id: script-1b45
+            expression:
+              groovy:
+                id: groovy-9215
+                expression: resource:file:src/main/groovy/lfe-multipart-processor.groovy
+        - to:
+            id: to-5b05
+            uri: https
+            parameters:
+              httpUri: uri-replaced-by-groovy-code
+              httpMethod: POST
