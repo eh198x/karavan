@@ -28,6 +28,12 @@
                         simple:
                           id: simple-a076
                           expression: "{{authorization.Cyprus.token}}"
+                    - id: setVariable-7651
+                      name: global:lfeUrl
+                      expression:
+                        simple:
+                          id: simple-1f79
+                          expression: "{{custom.lfe.url}}"
               - log:
                   id: log-9c01
                   message: >-
@@ -50,6 +56,13 @@
         - step:
             id: step-693d
             steps:
+              - setProperty:
+                  id: setProperty-b23a
+                  name: lfeUrl
+                  expression:
+                    simple:
+                      id: simple-5faf
+                      expression: ${variable.global:lfeUrl}
               - setProperty:
                   id: setProperty-3126
                   name: tokenCyprus

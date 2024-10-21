@@ -5,7 +5,7 @@ import org.apache.camel.Exchange
 import org.apache.camel.language.simple.SimpleLanguage
 
 Logger logger = Logger.getLogger("")
-logger.info("getVariable")
+//logger.info("getVariable")
 
 process(exchange, logger)
 
@@ -17,11 +17,14 @@ def process(Exchange exchange, Logger logger) throws Exception {
 
     def tokenCyprus = exchange.getProperty("tokenCyprus")
 
-    logger.info("Global Variable tokenCyprus: ${tokenCyprus}")
+    def url = exchange.getProperty("lfeUrl")
 
-    def uri = "${tokenCyprus}"
+    //logger.info("Global Variable tokenCyprus: ${tokenCyprus}")
 
-    logger.info("PRINTING uri: [${uri}]")
+    def token = "${tokenCyprus}"
+    def uri = "${url}"
+
+    logger.info("getVariable PRINTING uri: [${uri}]")
 
     exchange.getIn().setHeader("CamelHttpUri", uri)
 
