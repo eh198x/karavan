@@ -1,0 +1,82 @@
+- route:
+    id: Repeat-Token-Maintain=route-dfbf
+    nodePrefixId: route-e2e
+    from:
+      id: from-64e9
+      uri: timer
+      parameters:
+        timerName: timer1
+        period: "60000"
+      steps:
+        - step:
+            id: step-f153
+            steps:
+              - setProperty:
+                  id: setProperty-afe8
+                  description: Set Authorization Property - Cyprus
+                  name: tokenCyprus
+                  expression:
+                    simple:
+                      id: simple-9d4b
+                      expression: "{{authorization.Cyprus.token}}"
+              - setVariables:
+                  id: setVariables-2dc4
+                  variables:
+                    - id: setVariable-1d73
+                      name: global:tokenCyprus
+                      expression:
+                        simple:
+                          id: simple-a076
+                          expression: "{{authorization.Cyprus.token}}"
+              - log:
+                  id: log-9c01
+                  message: >-
+                    Repeat-Token-Maintain Body [${body}] and token Cyprus:
+                    [${exchangeProperty.tokenCyprus}]
+              - log:
+                  id: log-d9cd
+                  message: "Repeat-Token tokenCyprus: [${variable.global:tokenCyprus}]"
+- route:
+    id: Get-Files-API-route-75df
+    nodePrefixId: route-6e3
+    from:
+      id: from-8567
+      uri: timer
+      parameters:
+        delay: "2000"
+        period: "10000"
+        timerName: timer2
+      steps:
+        - step:
+            id: step-693d
+            steps:
+              - setProperty:
+                  id: setProperty-3126
+                  name: tokenCyprus
+                  expression:
+                    simple:
+                      id: simple-3f76
+                      expression: ${variable.global:tokenCyprus}
+              - setVariable:
+                  id: setVariable-18d6
+                  name: tokenCyprus
+                  expression:
+                    simple:
+                      id: simple-3b57
+                      expression: ${variable.global:tokenCyprus}
+              - log:
+                  id: log-8c78
+                  message: >-
+                    Get-Files-API- Body [${body}] and token Cyprus:
+                    [${exchangeProperty.tokenCyprus}]
+              - script:
+                  id: script-cf84
+                  expression:
+                    groovy:
+                      id: groovy-151e
+                      expression: resource:file:src/main/groovy/getVariable.groovy
+              - log:
+                  id: log-fffb
+                  message: >-
+                    Get-Files-API variable tokenCyprus:
+                    [${variable.global:tokenCyprus}]
