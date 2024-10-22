@@ -9,5 +9,5 @@ spec:
     - protocol: TCP
       port: 6379
       targetPort: 6379
-  type: ClusterIP
-
+      nodePort: 30001  # Specify a port in the range 30000-32767
+  type: NodePort
