@@ -9,6 +9,6 @@ public class ArtemisConfig {
     @Bean
     public AMQPConnectionDetails securedAmqpConnection() {
         String username;
-        return new AMQPConnectionDetails("amqp://127.0.0.1:61616", "{{camel.amqp.username}}", "{{camel.amqp.password}}");
+        return new AMQPConnectionDetails("{{camel.amqp.uri}}", "{{camel.amqp.username}}", "{{camel.amqp.password}}");
     }
 }
