@@ -1,0 +1,91 @@
+- route:
+    id: Repeat-Token-Maintain=route-dfbf
+    nodePrefixId: route-e2e
+    from:
+      id: from-64e9
+      uri: timer
+      parameters:
+        timerName: timer1
+        period: "60000"
+      steps:
+        - step:
+            id: step-f153
+            steps:
+              - setVariables:
+                  id: setVariables-2dc4
+                  variables:
+                    - id: setVariable-7651
+                      name: global:lfeUrl
+                      expression:
+                        simple:
+                          id: simple-1f79
+                          expression: "{{custom.lfe.url}}"
+              - setHeaders:
+                  id: setHeaders-fbad
+                  headers:
+                    - id: setHeader-d636
+                      name: CamelRedis.Key
+                      expression:
+                        simple:
+                          id: simple-13d8
+                          expression: Authorization
+                    - id: setHeader-17eb
+                      name: CamelRedis.Value
+                      expression:
+                        constant:
+                          id: constant-45b9
+                          expression: Dummy-Value-2
+                    - id: setHeader-9aed
+                      name: CamelRedis.Timeout
+                      expression:
+                        constant:
+                          id: constant-3c49
+                          expression: "4200"
+              - to:
+                  id: to-9a69
+                  uri: spring-redis
+                  parameters:
+                    host: "{{redisHost}}"
+                    port: "{{redisPort}}"
+              - log:
+                  id: log-9e0a
+                  message: >-
+                    Before Redis Sink: [{{redisHost}}:{{redisPort}}] and
+                    body:[${body}]
+- route:
+    id: Get-Files-API-route-75df
+    nodePrefixId: route-6e3
+    from:
+      id: from-8567
+      uri: timer
+      parameters:
+        delay: "2000"
+        period: "10000"
+        timerName: timer2
+      steps:
+        - step:
+            id: step-693d
+            steps:
+              - setHeaders:
+                  id: setHeaders-6ba9
+                  headers:
+                    - id: setHeader-8558
+                      name: CamelRedis.Key
+                      expression:
+                        constant:
+                          id: constant-5e61
+                          expression: Authorization
+              - log:
+                  id: log-8ec4
+                  message: "Before redis:: body:[${body}]"
+              - to:
+                  id: to-cba8
+                  uri: spring-redis
+                  parameters:
+                    host: "{{redisHost}}"
+                    port: "{{redisPort}}"
+                    command: GET
+              - log:
+                  id: log-d2c9
+                  message: "Get-Files-API-route: [${body}]"
+- routeConfiguration: {}
