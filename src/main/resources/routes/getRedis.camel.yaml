@@ -1,0 +1,37 @@
+- route:
+    id: Get-Files-API-route-75df
+    nodePrefixId: route-6e3
+    from:
+      id: from-8567
+      uri: timer
+      parameters:
+        delay: "2000"
+        period: "10000"
+        timerName: timer2
+      steps:
+        - step:
+            id: step-693d
+            steps:
+              - setHeaders:
+                  id: setHeaders-6ba9
+                  headers:
+                    - id: setHeader-8558
+                      name: CamelRedis.Key
+                      expression:
+                        constant:
+                          id: constant-5e61
+                          expression: Authorization
+              - log:
+                  id: log-8ec4
+                  message: "Before redis:: body:[${body}]"
+              - to:
+                  id: to-cba8
+                  uri: spring-redis
+                  parameters:
+                    host: "{{redisHost}}"
+                    port: "{{redisPort}}"
+                    command: GET
+              - log:
+                  id: log-d2c9
+                  message: "Get-Files-API-route: [${body}]"
+- routeConfiguration: {}

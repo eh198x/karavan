@@ -25,6 +25,9 @@ camel run src/main/resources/routes/artemisCF.camel.yaml  --dep=org.apache.camel
 
 camel run src/main/resources/routes/restPets.camel.yaml --dep=org.apache.groovy:groovy-all:4.0.23,org.apache.groovy:groovy-json:4.0.23,org.apache.httpcomponents.core5:httpcore5:5.4,org.apache.httpcomponents.client5:httpclient5:5.4 --reload --properties=src/main/resources/application.properties
 
+camel run src/main/resources/routes/setRedis.camel.yaml --dep=org.apache.groovy:groovy-all:4.0.23,org.apache.groovy:groovy-json:4.0.23 --reload --properties=src/main/resources/application.properties 
+
+camel run src/main/resources/routes/getRedis.camel.yaml --dep=org.apache.groovy:groovy-all:4.0.23,org.apache.groovy:groovy-json:4.0.23 --properties=src/main/resources/application.properties 
 
 
 
