@@ -1,0 +1,73 @@
+- route:
+    id: route-afb5
+    nodePrefixId: route-a74
+    from:
+      id: from-8c57
+      uri: netty-http
+      parameters:
+        protocol: http
+        port: "8044"
+        path: internal
+        host: 0.0.0.0
+      steps:
+        - log:
+            id: log-79e0
+            message: |+
+              exchangeId:${exchangeId}
+              messageid: ${id}
+              camelId: ${camelId} 
+              date with timestamp: ${date:now-24h:dd/MM/YYYY hh:mm:ss}
+              ${headers.CamelNettyRemoteAddress} 
+              ALL headers:headers ${headers}
+              Variables: ${variables}
+
+        - to:
+            id: to-c752
+            uri: direct
+            parameters:
+              name: d5
+- route:
+    id: d5-route-c8f0
+    nodePrefixId: route-6ea
+    from:
+      id: from-b1dc
+      uri: direct
+      parameters:
+        name: d5
+      steps:
+        - setBody:
+            id: setBody-c183
+            expression:
+              constant:
+                id: constant-426c
+                expression: "{\"msg\":\"hello back\"}"
+        - log:
+            id: log-5cde
+            message: "Called d5:: body: ${body}"
+- route:
+    id: route-00ca
+    nodePrefixId: route-f4e
+    from:
+      id: from-b822
+      uri: timer
+      parameters:
+        timerName: aTimer
+        delay: "2200"
+      steps:
+        - setBody:
+            id: setBody-4840
+            expression:
+              constant:
+                id: constant-8267
+                expression: "{\"msg\":\"hello from route-00ca\"}"
+        - to:
+            id: to-08a2
+            uri: netty-http
+            parameters:
+              protocol: http
+              host: 0.0.0.0
+              port: "8044"
+              path: internal
+        - log:
+            id: log-c07f
+            message: "Printing resp: ${body}"

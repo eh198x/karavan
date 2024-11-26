@@ -1,0 +1,15 @@
+meta {
+  name: Echo 844
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8044/internal
+  body: json
+  auth: none
+}
+
+body:json {
+  {"msg":"hi"}
+}
