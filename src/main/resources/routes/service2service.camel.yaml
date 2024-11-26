@@ -12,6 +12,7 @@
       steps:
         - log:
             id: log-79e0
+            description: "Logger: exchangeId, id, camelId, date/time"
             message: |+
               exchangeId:${exchangeId}
               messageid: ${id}
@@ -21,6 +22,10 @@
               ALL headers:headers ${headers}
               Variables: ${variables}
 
+        - log:
+            id: log-2724
+            description: "Logger: body"
+            message: "Received body: ${body}"
         - to:
             id: to-c752
             uri: direct
@@ -37,13 +42,15 @@
       steps:
         - setBody:
             id: setBody-c183
+            description: "Set Body: hello back"
             expression:
               constant:
                 id: constant-426c
                 expression: "{\"msg\":\"hello back\"}"
         - log:
             id: log-5cde
-            message: "Called d5:: body: ${body}"
+            description: "Logger: body"
+            message: "Called d5:: new body: ${body}"
 - route:
     id: route-00ca
     nodePrefixId: route-f4e
@@ -54,8 +61,17 @@
         timerName: aTimer
         delay: "2200"
       steps:
+        - log:
+            id: log-9c4f
+            description: "Logger: exchangeId, id, camelId, date/time"
+            message: >-
+              exchangeId:${exchangeId} messageid: ${id} camelId: ${camelId} 
+              date with timestamp: ${date:now-24h:dd/MM/YYYY hh:mm:ss}
+              ${headers.CamelNettyRemoteAddress}  ALL headers:headers ${headers}
+              Variables: ${variables}
         - setBody:
             id: setBody-4840
+            description: "Set Body: hello from route"
             expression:
               constant:
                 id: constant-8267
@@ -70,4 +86,5 @@
               path: internal
         - log:
             id: log-c07f
+            description: "Logger: body from resp"
             message: "Printing resp: ${body}"
